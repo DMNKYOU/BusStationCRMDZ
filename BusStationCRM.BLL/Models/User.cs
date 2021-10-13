@@ -15,5 +15,8 @@ namespace BusStationCRM.BLL.Models
 
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
+
+        public ICollection<Ticket> Tickets { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

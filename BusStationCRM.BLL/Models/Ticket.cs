@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,16 +8,16 @@ using BusStationCRM.BLL.Enums;
 
 namespace BusStationCRM.BLL.Models
 {
-    public class Order
+    public class Ticket
     {
         public int Id { get; set; }
-        public int SeatNumber { get; set; }
         public Status Status { get; set; }
+        public int SeatNumber { get; set; }
 
-        public int VoyageId { get; set; }
-        public Voyage Voyage { get; set; }
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
 
-        public Ticket Ticket { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace BusStationCRM.DAL.Contexts
         public DbSet<Voyage> Voyages { get; set; }// = default!;
         public DbSet<Order> Orders { get; set; }// = default!;
         public DbSet<User> Users { get; set; }// = default!;
+        public DbSet<Ticket> Tickets { get; set; }// = default!;
 
         public ApplicationDbContext(): base() 
         {

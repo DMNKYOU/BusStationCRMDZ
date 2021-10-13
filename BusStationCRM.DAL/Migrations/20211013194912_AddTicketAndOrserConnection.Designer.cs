@@ -4,14 +4,16 @@ using BusStationCRM.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BusStationCRM.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211013194912_AddTicketAndOrserConnection")]
+    partial class AddTicketAndOrserConnection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,15 +55,10 @@ namespace BusStationCRM.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("VoyageId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("VoyageId");
 
@@ -84,18 +81,10 @@ namespace BusStationCRM.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId")
                         .IsUnique();
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Tickets");
                 });
@@ -385,17 +374,11 @@ namespace BusStationCRM.DAL.Migrations
 
             modelBuilder.Entity("BusStationCRM.BLL.Models.Order", b =>
                 {
-                    b.HasOne("BusStationCRM.BLL.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
-
                     b.HasOne("BusStationCRM.BLL.Models.Voyage", "Voyage")
                         .WithMany("Orders")
                         .HasForeignKey("VoyageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
 
                     b.Navigation("Voyage");
                 });
@@ -408,13 +391,7 @@ namespace BusStationCRM.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BusStationCRM.BLL.Models.User", "User")
-                        .WithMany("Tickets")
-                        .HasForeignKey("UserId1");
-
                     b.Navigation("Order");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BusStationCRM.BLL.Models.Voyage", b =>
@@ -517,13 +494,6 @@ namespace BusStationCRM.DAL.Migrations
             modelBuilder.Entity("BusStationCRM.BLL.Models.Voyage", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("BusStationCRM.BLL.Models.User", b =>
-                {
-                    b.Navigation("Orders");
-
-                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }
