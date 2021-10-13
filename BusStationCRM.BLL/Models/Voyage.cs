@@ -38,6 +38,6 @@ namespace BusStationCRM.BLL.Models
         public BusStop BusStopArrival { get; set; }
 
         public ICollection<BusStop> BusStops { get; set; }
-       
+        public ICollection<Order> Orders { get; set; }
     }
 }
