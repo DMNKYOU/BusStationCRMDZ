@@ -1,16 +1,18 @@
-﻿
+﻿using BusStationCRM.BLL.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using BusStationCRM.BLL.Enums;
 
 namespace BusStationCRM.DAL.Contexts
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        
+        public DbSet<BusStop> BusStops { get; set; }// = default!;
+        public DbSet<Voyage> Voyages { get; set; }// = default!;
+    
 
         public ApplicationDbContext(): base() 
         {
@@ -24,6 +26,15 @@ namespace BusStationCRM.DAL.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Voyage>()
+                .HasOne(b => b.BusStopArrival)
+                .WithMany(a => a.ArrivalVoyages)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Voyage>()
+                .HasOne(b => b.BusStopDeparture)
+                .WithMany(a => a.DepartureVoyages)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Seed();
         }
