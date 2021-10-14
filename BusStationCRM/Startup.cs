@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using BusStationCRM.BLL.Models;
 using BusStationCRM.DAL.Interfaces;
 using BusStationCRM.DAL.Repositories;
+using BusStationCRM.Models;
 
 namespace BusStationCRM
 {
@@ -46,7 +47,7 @@ namespace BusStationCRM
             services.AddScoped<IRepositoryAsync<Order>, OrdersRepository>();
             services.AddScoped<IRepositoryAsync<Ticket>, TicketsRepository>();
             services.AddScoped<IRepositoryAsync<Voyage>, VoyagesRepository>();
-            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IUsersRepository<User>, UsersRepository>();
 
 
         }

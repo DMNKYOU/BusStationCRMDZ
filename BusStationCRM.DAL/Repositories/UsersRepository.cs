@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusStationCRM.DAL.Repositories
 {
-    public class UsersRepository : IUsersRepository
+    public class UsersRepository : IUsersRepository<User>
     {
         private readonly ApplicationDbContext _context;
         public UsersRepository(ApplicationDbContext context)
