@@ -11,6 +11,5 @@ namespace BusStationCRM.BLL.Interfaces
         Task AddAsync(TEntity entity);//
         Task EditAsync(TEntity entity); //
         Task DeleteAsync(int id);
-        void Dispose(); ///////////////////////////
     }
 }
