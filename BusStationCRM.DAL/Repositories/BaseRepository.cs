@@ -25,7 +25,7 @@ namespace BusStationCRM.DAL.Repositories
             return _entities.AsEnumerable().Where(predicate).ToList();
         }
 
-        public async Task<TEntity> GetAsync(int id) ////////////////////////////////////should be override
+        public async Task<TEntity> GetAsync(int id) ////////////////////////////////////maybe override
         {
             return await _entities.FindAsync(id);
         }

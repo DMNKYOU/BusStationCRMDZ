@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusStationCRM.BLL.Models;
+using BusStationCRM.DAL.Interfaces;
+using BusStationCRM.DAL.Repositories;
 
 namespace BusStationCRM
 {
@@ -34,8 +36,19 @@ namespace BusStationCRM
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
+
             services.AddControllersWithViews();
+
+            services.AddScoped<IRepositoryAsync<BusStop>, BusStopsRepository>();
+            services.AddScoped<IRepositoryAsync<Order>, OrdersRepository>();
+            services.AddScoped<IRepositoryAsync<Ticket>, TicketsRepository>();
+            services.AddScoped<IRepositoryAsync<Voyage>, VoyagesRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
