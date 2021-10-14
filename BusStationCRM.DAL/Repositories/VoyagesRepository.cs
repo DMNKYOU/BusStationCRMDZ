@@ -17,7 +17,7 @@ namespace BusStationCRM.DAL.Repositories
         {
         }
 
-        public new Task<Voyage> GetAsync(int id)
+        public new Task<Voyage> GetAsync(int id) 
         {
             return _context.Voyages.AsNoTracking()
                 .Include(v => v.BusStops)
