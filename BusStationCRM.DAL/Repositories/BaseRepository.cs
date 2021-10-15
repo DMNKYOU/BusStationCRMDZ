@@ -23,14 +23,15 @@ namespace BusStationCRM.DAL.Repositories
         public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
         {
             return _entities.AsEnumerable().Where(predicate).ToList();
+            //return GetAllAsync().Result.AsEnumerable().Where(predicate).ToList();
         }
 
-        public async Task<TEntity> GetAsync(int id) ////////////////////////////////////should be override
+        public virtual async Task<TEntity> GetAsync(int id) ////////////////////////////////////maybe override
         {
             return await _entities.FindAsync(id);
         }
 
-        public async Task<List<TEntity>> GetAllAsync()/////////////////////////// should be override
+        public virtual async Task<List<TEntity>> GetAllAsync()/////////////////////////// should be override
         {
             return await _entities.ToListAsync();
         }

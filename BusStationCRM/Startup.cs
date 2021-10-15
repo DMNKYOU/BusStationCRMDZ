@@ -12,7 +12,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using BusStationCRM.BLL.Interfaces;
 using BusStationCRM.BLL.Models;
+using BusStationCRM.DAL.Interfaces;
+using BusStationCRM.DAL.Repositories;
+using BusStationCRM.Models;
+using CampusCRM.BLL.Services;
+using CampusCRM.MVC.Mappings;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace BusStationCRM
 {
@@ -28,18 +37,62 @@ namespace BusStationCRM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
+
+            //OAuth 2.0
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    //all users set this property private and better use own input
+                    //options.Scope.Add("https://www.googleapis.com/auth/user.birthday.read");
+                });
+           
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                //options.AddPolicy("ManageAndDevDepart", policy => //AllRolesFromManagementAndDevelopmentDepartments
+                //    policy.RequireRole("Admin", "Manager"));
+            }); 
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
+            services.AddScoped<IRepositoryAsync<BusStop>, BusStopsRepository>();
+            services.AddScoped<IRepositoryAsync<Order>, OrdersRepository>();
+            services.AddScoped<IRepositoryAsync<Ticket>, TicketsRepository>();
+            services.AddScoped<IRepositoryAsync<Voyage>, VoyagesRepository>();
+            services.AddScoped<IUsersRepository<User>, UsersRepository>();
+            services.AddScoped<IBusStopsService, BusStopsService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -59,6 +112,8 @@ namespace BusStationCRM
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            loggerFactory.AddFile($"Logs/log.txt");
 
             app.UseEndpoints(endpoints =>
             {
