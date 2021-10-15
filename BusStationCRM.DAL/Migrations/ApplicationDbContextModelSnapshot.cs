@@ -84,10 +84,7 @@ namespace BusStationCRM.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -95,7 +92,7 @@ namespace BusStationCRM.DAL.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
                 });
@@ -410,7 +407,7 @@ namespace BusStationCRM.DAL.Migrations
 
                     b.HasOne("BusStationCRM.BLL.Models.User", "User")
                         .WithMany("Tickets")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Order");
 
