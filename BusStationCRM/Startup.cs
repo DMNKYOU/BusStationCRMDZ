@@ -56,6 +56,7 @@ namespace BusStationCRM
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
 
+            //OAuth 2.0
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
@@ -63,6 +64,8 @@ namespace BusStationCRM
                         Configuration.GetSection("Authentication:Google");
                     options.ClientId = googleAuthNSection["ClientId"];
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    //all users set this property private and better use own input
+                    //options.Scope.Add("https://www.googleapis.com/auth/user.birthday.read");
                 });
            
             services.AddAuthorization(options =>
