@@ -17,16 +17,18 @@ namespace BusStationCRM.DAL.Repositories
         {
         }
 
-        public new Task<BusStop> GetAsync(int id) 
+        public override Task<BusStop> GetAsync(int id) 
         {
             return _context.BusStops.AsNoTracking()
                 .Include(s => s.Voyages)
                 .SingleOrDefaultAsync(sr => sr.Id == id);
         }
 
-        public new Task<List<BusStop>> GetAllAsync()
+        public override Task<List<BusStop>> GetAllAsync()
         {
             return _context.BusStops
+                .Include(s => s.ArrivalVoyages)
+                .Include(s => s.DepartureVoyages)
                 .Include(s => s.Voyages)
                 .ToListAsync();
         }
