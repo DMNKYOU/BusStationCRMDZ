@@ -18,7 +18,7 @@ using BusStationCRM.BLL.Models;
 using BusStationCRM.DAL.Interfaces;
 using BusStationCRM.DAL.Repositories;
 using BusStationCRM.Models;
-using CampusCRM.BLL.Services;
+using  BusStationCRM.BLL.Services;
 using CampusCRM.MVC.Mappings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
@@ -81,12 +81,15 @@ namespace BusStationCRM
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
+
             services.AddScoped<IRepositoryAsync<BusStop>, BusStopsRepository>();
             services.AddScoped<IRepositoryAsync<Order>, OrdersRepository>();
             services.AddScoped<IRepositoryAsync<Ticket>, TicketsRepository>();
             services.AddScoped<IRepositoryAsync<Voyage>, VoyagesRepository>();
             services.AddScoped<IUsersRepository<User>, UsersRepository>();
+
             services.AddScoped<IBusStopsService, BusStopsService>();
+            services.AddScoped<IVoyagesService, VoyagesService>();
 
 
         }
@@ -101,7 +104,7 @@ namespace BusStationCRM
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error?code={0}");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

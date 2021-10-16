@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
-using BusStationCRM.Enums;
+using BusStationCRM.BLL.Enums;
 
 namespace BusStationCRM.Models
 {

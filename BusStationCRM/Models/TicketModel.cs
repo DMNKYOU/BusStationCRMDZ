@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusStationCRM.BLL.Enums;
 using BusStationCRM.BLL.Models;
-using BusStationCRM.Enums;
 
 namespace BusStationCRM.Models
 {

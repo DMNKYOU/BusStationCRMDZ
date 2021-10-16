@@ -17,16 +17,19 @@ namespace BusStationCRM.Controllers
     {
 
         private readonly IBusStopsService _busStopsService;
+        private readonly IVoyagesService _voyagesService;
 
         private readonly IMapper _mapper;
 
         private readonly ILogger _logger;
 
-        public BusStopsController(IMapper mapper, IBusStopsService busStopsService, ILogger<BusStopsController> logger)
+        public BusStopsController(IMapper mapper, IBusStopsService busStopsService,
+            IVoyagesService voyagesService, ILogger<BusStopsController> logger)
         {
             _mapper = mapper;
             _logger = logger;
             _busStopsService = busStopsService;
+            _voyagesService = voyagesService;
         }
 
         [AllowAnonymous]
@@ -47,47 +50,96 @@ namespace BusStationCRM.Controllers
             }
         }
 
-        // GET: BusStopsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: BusStopsController/Add
+        //[HttpGet]
+        //public IActionResult AddAsync()   ///////////change type
+        //{
+        //    ViewBag.Action = "Add";
 
-        // POST: BusStopsController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //    return View("Edit", new BusStopModel());
+        //}
+
+        //// POST: BusStopsController/Add
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        ////[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> AddAsync(BusStopModel stopModel)
+        //{
+
+        //    stopModel.Name = stopModel.Name.Trim();
+        //    stopModel.Description = stopModel.Description.Trim();
+        //    if (!ModelState.IsValid)
+        //    {
+        //        ViewBag.Action = "Add";
+        //        return View("Edit", stopModel);
+        //    }
+
+        //    try
+        //    {
+        //        await _busStopsService.AddAsync(_mapper.Map<BusStop>(stopModel));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.ToString());
+        //        return StatusCode(500);
+        //    }
+
+        //    return RedirectToAction("Index", "BusStops");
+        //}
+
+        //method used for add and edit
+        [HttpGet]
+        public async Task<IActionResult> EditAsync(int? id)
         {
+            BusStopModel stopModel;
             try
             {
-                return RedirectToAction(nameof(Index));
+                stopModel = id.HasValue
+                    ? _mapper.Map<BusStopModel>(await _busStopsService.GetByIdAsync(id.Value))
+                    : new BusStopModel();
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
             }
-        }
 
-        // GET: BusStopsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
+            ViewBag.Action = id.HasValue ? "Edit": "Add";
+
+            return View(stopModel);
+
         }
 
         // POST: BusStopsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        // [Authorize(policy: "")]
+        public async Task<ActionResult> EditAsync(BusStopModel stopModel)
         {
+
+            stopModel.Name = stopModel.Name.Trim();
+            stopModel.Description = stopModel.Description.Trim();
+
+            if (!ModelState.IsValid)
+                return View("Edit", stopModel);
+
+            var stop = _mapper.Map<BusStop>(stopModel);
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (stop.Id != 0)
+                    await _busStopsService.EditAsync(stop);
+                else
+                    await _busStopsService.AddAsync(stop);
+
+                return RedirectToAction("Index", "BusStops");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
             }
         }
+
 
         [HttpGet]
         [Authorize]//(Roles = "Admin")]

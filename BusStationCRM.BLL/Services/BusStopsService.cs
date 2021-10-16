@@ -6,7 +6,7 @@ using BusStationCRM.BLL.Interfaces;
 using BusStationCRM.BLL.Models;
 using BusStationCRM.DAL.Interfaces;
 
-namespace CampusCRM.BLL.Services
+namespace  BusStationCRM.BLL.Services
 {
     public class BusStopsService : IBusStopsService
     {
