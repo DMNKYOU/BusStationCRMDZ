@@ -23,7 +23,9 @@ namespace BusStationCRM.Models
         public DateTime TravelTime { get; set; }
 
         public int NumberSeats { get; set; }
-        public int TicketCost { get; set; }
+
+        [Display(Name = "Price for ticket")]
+        public double TicketCost { get; set; }
 
         public TypeTransport Type { get; set; }
 
