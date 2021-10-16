@@ -17,7 +17,7 @@ namespace BusStationCRM.DAL.Repositories
         {
         }
 
-        public new Task<Voyage> GetAsync(int id) 
+        public override Task<Voyage> GetAsync(int id) 
         {
             return _context.Voyages.AsNoTracking()
                 .Include(v => v.BusStops)
@@ -27,10 +27,13 @@ namespace BusStationCRM.DAL.Repositories
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public new Task<List<Voyage>> GetAllAsync()
+        public override Task<List<Voyage>> GetAllAsync()
         {
             return _context.Voyages
                 .Include(s => s.BusStops)
+                .Include(v => v.BusStopArrival)
+                .Include(v => v.BusStopDeparture)
+                .Include(v => v.Orders)
                 .ToListAsync();
         }
     }

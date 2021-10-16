@@ -31,7 +31,7 @@ namespace  BusStationCRM.BLL.Services
         {
             if (entity == null)
                 throw new ArgumentNullException();
-
+            entity.TravelTime = new DateTime() + (entity.ArrivalInfo - entity.DepartureInfo);
             await _voyagesService.CreateAsync(entity);
         }
 
@@ -39,7 +39,7 @@ namespace  BusStationCRM.BLL.Services
         {
             if (entity == null)
                 throw new ArgumentNullException();
-
+            entity.TravelTime = new DateTime() + (entity.ArrivalInfo - entity.DepartureInfo);
             await _voyagesService.UpdateAsync(entity);
         }
 

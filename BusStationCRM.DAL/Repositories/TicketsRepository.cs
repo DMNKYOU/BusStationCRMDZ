@@ -17,7 +17,7 @@ namespace BusStationCRM.DAL.Repositories
         {
         }
 
-        public new Task<Ticket> GetAsync(int id)
+        public override Task<Ticket> GetAsync(int id)
         {
             return _context.Tickets.AsNoTracking()
                 .Include(s => s.Order)
@@ -25,7 +25,7 @@ namespace BusStationCRM.DAL.Repositories
                 .SingleOrDefaultAsync(sr => sr.Id == id);
         }
 
-        public new Task<List<Ticket>> GetAllAsync()
+        public override Task<List<Ticket>> GetAllAsync()
         {
             return _context.Tickets
                 .Include(s => s.Order)

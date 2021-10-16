@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model List<VoyageModel>
+@{
+    ViewData["Title"] = "Voyages - BusStationCRM";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Voyages list</h1>
+    <h1> </h1>
+</div>
+<table class="table text-center table-hover ">
+    <thead class="bg-primary">
+        <tr>
+            <th scope="col" class="text-light">Number</th>
+            <th scope="col" class="text-light">Name</th>
+            <th scope="col" class="text-light">Departure Info</th>
+            <th scope="col" class="text-light">Arrival Info</th>
+            <th scope="col" class="text-light">Travel time</th>
+            <th scope="col" class="text-light">Available seats</th>
+            <th scope="col" class="text-light">Ticket cost</th>
+            <th scope="col" class="text-light">Type</th>
+            <th scope="col" class="text-light">Departure</th>
+            <th scope="col" class="text-light">Arrive</th>
+            @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+            {
+                <th scope="col" class="text-light"></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var entity in Model)
+    {
+        <tr>
+            <th scope="col">@entity.Number</th>
+            <th scope="col">@entity.Name</th>
+            <th scope="col">@entity.DepartureInfo</th>
+            <th scope="col">@entity.ArrivalInfo</th>
+            <th scope="col">@entity.TravelTime</th>
+            <th scope="col">@entity.NumberSeats</th>
+            <th scope="col">@entity.TicketCost</th>
+            <th scope="col">@entity.Type</th>
+            @if (entity.BusStopDeparture != null)
+            {
+                <th scope="col">@entity.BusStopDeparture.Name</th>
+            }
+            else
+            {
+                <th scope="col"></th>
+            }
+            @if (entity.BusStopArrival != null)
+            {
+                <th scope="col">@entity.BusStopArrival.Name</th>
+            }
+            else
+            {
+                <th scope="col"></th>
+            }
+            @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+            {
+                <th scope="col">
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            •••
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" asp-controller="Voyages" asp-action="Edit" asp-route-id="@entity.Id">Edit</a>
+                            <a class="dropdown-item" asp-controller="Voyages" asp-action="Delete" asp-route-id="@entity.Id">Delete</a>
+                        </div>
+                    </div>
+                </th>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
+@if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+{
+    <div class="text-white">
+        <a class="btn btn-primary active" asp-controller="Voyages" asp-action="Edit">Add new bus stop</a>
+    </div>
+}

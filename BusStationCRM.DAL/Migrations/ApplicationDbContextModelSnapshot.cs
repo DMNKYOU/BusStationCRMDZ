@@ -125,8 +125,8 @@ namespace BusStationCRM.DAL.Migrations
                     b.Property<int>("NumberSeats")
                         .HasColumnType("int");
 
-                    b.Property<int>("TicketCost")
-                        .HasColumnType("int");
+                    b.Property<double>("TicketCost")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("TravelTime")
                         .HasColumnType("datetime2");
