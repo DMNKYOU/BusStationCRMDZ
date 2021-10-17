@@ -37,7 +37,7 @@ namespace BusStationCRM.Controllers
         }
 
         [AllowAnonymous]
-        // GET: BusStopsController
+        // GET
         public async Task<IActionResult> IndexAsync()
         {
             try
@@ -50,7 +50,7 @@ namespace BusStationCRM.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(500);
+                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
         }
 
@@ -68,7 +68,7 @@ namespace BusStationCRM.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(500);
+                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
 
             ViewBag.Action = id.HasValue ? "Edit": "Add";
@@ -104,7 +104,7 @@ namespace BusStationCRM.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(500);
+                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
             
             return RedirectToAction("Index", "Voyages");
@@ -123,29 +123,9 @@ namespace BusStationCRM.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(500);
+                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
         }
 
-        [HttpGet]
-        [Authorize]//(Roles = "Admin")]////////////////////////////////
-        public async Task<IActionResult> BuyBookTicket(VoyageModel voyageModel, int id)
-        {
-            //voyageModel.NumberSeats--;
-            //try
-            //{
-            //    if (id == 1)
-            //        await _ordersService.AddAsync(voyage);
-            //    else
-            //        await _ordersService.EditAsync(voyage);
-            //    await _voyagesService.EditAsync(_mapper.Map<Voyage>(voyageModel));
-               return RedirectToAction("Index", "Voyages");
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex.ToString());
-            //    return StatusCode(500);
-            //}
-        }
     }
 }

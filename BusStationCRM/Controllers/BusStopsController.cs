@@ -46,7 +46,7 @@ namespace BusStationCRM.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(500);
+                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
         }
 
@@ -101,7 +101,7 @@ namespace BusStationCRM.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(500);
+                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
 
             ViewBag.Action = id.HasValue ? "Edit": "Add";
@@ -136,7 +136,7 @@ namespace BusStationCRM.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(500);
+                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
         }
 
@@ -153,7 +153,7 @@ namespace BusStationCRM.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
-                return StatusCode(500);
+                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
         }
     }

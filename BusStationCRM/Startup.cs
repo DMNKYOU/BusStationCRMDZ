@@ -91,6 +91,7 @@ namespace BusStationCRM
             services.AddScoped<IBusStopsService, BusStopsService>();
             services.AddScoped<IVoyagesService, VoyagesService>();
             services.AddScoped<IOrdersService, OrdersService>();
+            services.AddScoped<ITicketsService, TicketsService>();
 
         }
 
@@ -99,6 +100,7 @@ namespace BusStationCRM
         {
             if (env.IsDevelopment())
             {
+                app.UseExceptionHandler("/Home/Error?code={0}");
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
