@@ -128,24 +128,24 @@ namespace BusStationCRM.Controllers
         }
 
         [HttpGet]
-        [Authorize]//(Roles = "Admin")]/////////////////////////////////////busstops and orders lists INFO
+        [Authorize]//(Roles = "Admin")]////////////////////////////////
         public async Task<IActionResult> BuyBookTicket(VoyageModel voyageModel, int id)
         {
-            voyageModel.NumberSeats--;
-            try
-            {
-                if (id == 1)
-                    await _ordersService.AddAsync(voyage);
-                else
-                    await _ordersService.EditAsync(voyage);
-                await _voyagesService.EditAsync(_mapper.Map<Voyage>(voyageModel));
-                return RedirectToAction("Index", "Voyages");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return StatusCode(500);
-            }
+            //voyageModel.NumberSeats--;
+            //try
+            //{
+            //    if (id == 1)
+            //        await _ordersService.AddAsync(voyage);
+            //    else
+            //        await _ordersService.EditAsync(voyage);
+            //    await _voyagesService.EditAsync(_mapper.Map<Voyage>(voyageModel));
+               return RedirectToAction("Index", "Voyages");
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex.ToString());
+            //    return StatusCode(500);
+            //}
         }
     }
 }
