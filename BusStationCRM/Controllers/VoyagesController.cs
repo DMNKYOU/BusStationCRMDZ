@@ -19,18 +19,21 @@ namespace BusStationCRM.Controllers
 
         private readonly IVoyagesService _voyagesService;
         private readonly IBusStopsService _busStopsService;
+        private readonly IOrdersService _ordersService;
 
         private readonly IMapper _mapper;
 
         private readonly ILogger _logger;
 
-        public VoyagesController(IMapper mapper, IVoyagesService voyagesService, IBusStopsService busStopsService,
+        public VoyagesController(IMapper mapper, IVoyagesService voyagesService,
+            IOrdersService ordService,IBusStopsService busStopsService,
             ILogger<BusStopsController> logger)
         {
             _mapper = mapper;
             _logger = logger;
             _voyagesService = voyagesService;
             _busStopsService = busStopsService;
+            _ordersService = ordService;
         }
 
         [AllowAnonymous]
@@ -115,6 +118,27 @@ namespace BusStationCRM.Controllers
             try
             {
                 await _voyagesService.DeleteAsync(id);
+                return RedirectToAction("Index", "Voyages");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]//(Roles = "Admin")]/////////////////////////////////////busstops and orders lists INFO
+        public async Task<IActionResult> BuyBookTicket(VoyageModel voyageModel, int id)
+        {
+            voyageModel.NumberSeats--;
+            try
+            {
+                if (id == 1)
+                    await _ordersService.AddAsync(voyage);
+                else
+                    await _ordersService.EditAsync(voyage);
+                await _voyagesService.EditAsync(_mapper.Map<Voyage>(voyageModel));
                 return RedirectToAction("Index", "Voyages");
             }
             catch (Exception ex)

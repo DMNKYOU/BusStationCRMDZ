@@ -90,7 +90,7 @@ namespace BusStationCRM
 
             services.AddScoped<IBusStopsService, BusStopsService>();
             services.AddScoped<IVoyagesService, VoyagesService>();
-
+            services.AddScoped<IOrdersService, OrdersService>();
 
         }
 

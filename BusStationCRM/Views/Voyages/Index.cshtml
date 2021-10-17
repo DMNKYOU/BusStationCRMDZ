@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Authorization
+@using BusStationCRM.BLL.Enums
 @inject IAuthorizationService AuthorizationService
 @model List<VoyageModel>
 @{
@@ -24,6 +25,8 @@
             <th scope="col" class="text-light">Arrive</th>
             @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
             {
+                <th scope="col" class="text-light"></th>
+               // @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
                 <th scope="col" class="text-light"></th>
             }
         </tr>
@@ -58,6 +61,21 @@
             }
             @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
             {
+                <th scope="col">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <div class="btn-secondary">
+                            <form asp-controller="BusStops" asp-action="Index" asp-route-id="@Status.BoughtOut">
+                                <button type="submit" class="btn btn-secondary">Buy</button>
+                            </form>
+                        </div>
+                        <div class="btn-secondary">
+                            <form asp-controller="BusStops" asp-action="Index" asp-route-id="@Status.Reserved">
+                                <button type="submit" class="btn btn-secondary">Book</button>
+                            </form>
+                        </div>
+                    </div>
+                </th>
+                //@if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
                 <th scope="col">
                     <div class="btn-group" role="group">
                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
