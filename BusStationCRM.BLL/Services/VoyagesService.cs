@@ -32,6 +32,7 @@ namespace  BusStationCRM.BLL.Services
             if (entity == null)
                 throw new ArgumentNullException();
             entity.TravelTime = new DateTime() + (entity.ArrivalInfo - entity.DepartureInfo);
+            entity.NumberSeats = entity.NumberSeats > 0 ? entity.NumberSeats : 1;
             await _voyagesService.CreateAsync(entity);
         }
 
@@ -40,6 +41,7 @@ namespace  BusStationCRM.BLL.Services
             if (entity == null)
                 throw new ArgumentNullException();
             entity.TravelTime = new DateTime() + (entity.ArrivalInfo - entity.DepartureInfo);
+            entity.NumberSeats = entity.NumberSeats >= 0 ? entity.NumberSeats : 0;
             await _voyagesService.UpdateAsync(entity);
         }
 

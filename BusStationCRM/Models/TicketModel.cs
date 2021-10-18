@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,9 @@ namespace BusStationCRM.Models
     {
         public int Id { get; set; }
         public Status Status { get; set; }
+
+        [Required]
+        [RegularExpression(@"^[-+]?[0-9]*\.?[0-9]+$", ErrorMessage = "This field can be contain only numbers")]
         public int SeatNumber { get; set; }
 
         public int OrderId { get; set; }

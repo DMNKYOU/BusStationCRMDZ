@@ -21,7 +21,7 @@ namespace BusStationCRM.DAL.Repositories
         {
             return _context.Orders.AsNoTracking()
                 .Include(s => s.Voyage)
-               // .Include(s => s.User)
+                .Include(s => s.Ticket)
                 .SingleOrDefaultAsync(sr => sr.Id == id);
         }
 
@@ -29,6 +29,7 @@ namespace BusStationCRM.DAL.Repositories
         {
             return _context.Orders
                 .Include(s => s.Voyage)
+                .Include(s => s.Ticket)
                 .ToListAsync();
         }
     }

@@ -59,23 +59,22 @@
             {
                 <th scope="col"></th>
             }
-            @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+            @if (User.Identity.IsAuthenticated)
             {
-                <th scope="col">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <div class="btn-secondary">
-                            <form asp-controller="BusStops" asp-action="Index" asp-route-id="@Status.BoughtOut">
-                                <button type="submit" class="btn btn-secondary">Buy</button>
-                            </form>
+                if (entity.NumberSeats >= 1)
+                {
+                    <th scope="col">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <div class="btn-secondary">
+                                <a class="btn btn-secondary" asp-controller="Orders" asp-action="Add" asp-route-voyageId="@entity.Id" asp-route-idStatusOrder="@((int)Status.BoughtOut)">Buy</a>
+                            </div>
+                            <div class="btn-secondary">
+                                <a class="btn btn-secondary" asp-controller="Orders" asp-action="Add" asp-route-voyageId="@entity.Id" asp-route-idStatusOrder="@((int)Status.Reserved)">Reserve</a>
+                            </div>
                         </div>
-                        <div class="btn-secondary">
-                            <form asp-controller="BusStops" asp-action="Index" asp-route-id="@Status.Reserved">
-                                <button type="submit" class="btn btn-secondary">Book</button>
-                            </form>
-                        </div>
-                    </div>
-                </th>
-                //@if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+                    </th>
+                }
+                //@if (User.IsInRole("Admin"))
                 <th scope="col">
                     <div class="btn-group" role="group">
                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

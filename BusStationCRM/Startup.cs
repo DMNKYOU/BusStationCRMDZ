@@ -100,7 +100,7 @@ namespace BusStationCRM
         {
             if (env.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error?code={0}");
+                //app.UseExceptionHandler("/Home/Error?code={0}");
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
