@@ -44,10 +44,11 @@ namespace BusStationCRM.Controllers
         {
             try
             {
-                var ticketsAll = await _ticketsService.GetAllAsync();
-                var resList = _mapper.Map<List<Ticket>, List<TicketModel>>(ticketsAll);
+                var user = await userManager.GetUserAsync(User);
+                var ordersAll = await _ordersService.FindAsync(c=> c.UserId == user.Id);
+                var resList = _mapper.Map<List<Order>, List<OrderModel>>(await ordersAll.ToListAsync());
 
-                return View();//resList
+                return View(resList);
             }
             catch (Exception ex)
             {
