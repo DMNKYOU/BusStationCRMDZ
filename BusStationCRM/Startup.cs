@@ -86,7 +86,6 @@ namespace BusStationCRM
             services.AddScoped<IRepositoryAsync<Order>, OrdersRepository>();
             services.AddScoped<IRepositoryAsync<Ticket>, TicketsRepository>();
             services.AddScoped<IRepositoryAsync<Voyage>, VoyagesRepository>();
-            services.AddScoped<IUsersRepository<User>, UsersRepository>();
 
             services.AddScoped<IBusStopsService, BusStopsService>();
             services.AddScoped<IVoyagesService, VoyagesService>();
