@@ -9,11 +9,17 @@ namespace CampusCRM.MVC.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<Ticket, TicketModel>().ReverseMap();
-            CreateMap<Order, OrderModel>().ReverseMap();
             CreateMap<BusStop, BusStopModel>().ReverseMap();
-            CreateMap<Voyage, VoyageModel>().ReverseMap();
-
+            CreateMap<Voyage, VoyageModel>().ForMember(model => model.BusStopArrival,
+                opts => opts.MapFrom(source => source.BusStopArrival))
+                .ForMember(model => model.BusStopDeparture,
+                    opts => opts.MapFrom(source => source.BusStopDeparture))
+                .ReverseMap();
+            CreateMap<Order, OrderModel>()
+                .ForMember(model => model.Voyage,
+                    opts => opts.MapFrom(source => source.Voyage))
+                .ReverseMap();
+            CreateMap<Ticket, TicketModel>().ReverseMap();
         }
     }
 }

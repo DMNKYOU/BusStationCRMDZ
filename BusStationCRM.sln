@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.DAL.EF", "Bus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.BLL", "BusStationCRM.BLL\BusStationCRM.BLL.csproj", "{BDAA239A-BABE-480C-AA61-A20701BF1924}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusStationCRM.DAL", "BusStationCRM.DAL.EF\BusStationCRM.DAL.csproj", "{BD88B7B0-35E2-4BAB-A127-0BB123D037D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.DAL", "BusStationCRM.DAL.EF\BusStationCRM.DAL.csproj", "{BD88B7B0-35E2-4BAB-A127-0BB123D037D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

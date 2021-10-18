@@ -1,20 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
-@model List<BusStopModel>
+@model List<OrderModel>
 @{
-    ViewData["Title"] = "Bus Stops - BusStationCRM";
+    ViewData["Title"] = "Orders - BusStation";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Bus stops information</h1>
+    <h1 class="display-4">Orders</h1>
     <h1> </h1>
 </div>
 <table class="table text-center table-hover ">
     <thead class="bg-primary">
     <tr>
-        <th scope="col" class="text-light">Name</th>
-        <th scope="col" class="text-light">Description</th>
-        <th scope="col" class="text-light">Type</th>
+        <th scope="col" class="text-light">Number</th>
+        <th scope="col" class="text-light">Seat</th>
+        <th scope="col" class="text-light">Seat</th>
+        <th scope="col" class="text-light">Voyage</th>
+        <th scope="col" class="text-light">Voyage</th>
         @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
         {
             <th scope="col" class="text-light"></th>
@@ -25,10 +27,12 @@
     @foreach (var stop in Model)
     {
         <tr>
-            <th scope="col">@stop.Name</th>
-            <th scope="col">@stop.Description</th>
-            <th scope="col">@stop.Type</th>
-            @if(User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+            <th scope="col">@stop.Id</th>
+            <th scope="col">@stop.SeatNumber</th>
+            <th scope="col">@stop.Status</th>
+            <th scope="col">@stop.Voyage.Number</th>
+            <th scope="col">@stop.Voyage.Name</th>
+            @*if(User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
             {
                 <th scope="col">
                     <div class="btn-group" role="group">
@@ -41,14 +45,8 @@
                         </div>
                     </div>
                 </th>
-            }
+            }*@
         </tr>
     }
     </tbody>
 </table>
-@if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
-{
-    <div class="text-white">
-        <a class="btn btn-primary active" asp-controller="BusStops" asp-action="Edit">Add new bus stop</a>
-    </div>
-}

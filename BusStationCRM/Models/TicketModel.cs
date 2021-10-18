@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusStationCRM.BLL.Enums;
 using BusStationCRM.BLL.Models;
-using BusStationCRM.Enums;
 
 namespace BusStationCRM.Models
 {
@@ -13,12 +14,14 @@ namespace BusStationCRM.Models
     {
         public int Id { get; set; }
         public Status Status { get; set; }
+
+        [Required]
+        [RegularExpression(@"^[-+]?[0-9]*\.?[0-9]+$", ErrorMessage = "This field can be contain only numbers")]
         public int SeatNumber { get; set; }
 
         public int OrderId { get; set; }
         public OrderModel Order { get; set; }
-
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
     }
 }

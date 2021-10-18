@@ -1,0 +1,61 @@
+﻿@using BusStationCRM.BLL.Enums
+@model BusStopModel
+
+@{
+    string action = null;
+    if (Model.Id != 0)
+    {
+        action = "Edit";
+    }
+    else
+    {
+        action = "Add";
+    }
+    ViewData["Title"] = $"{action} bus stop";
+}
+<div class="content">
+    <h1>@action student</h1>
+    <div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                @*@using (Html.BeginForm($"{action}", "BusStops", FormMethod.Post))
+                {*@
+                    <form method="post" asp-controller="BusStops" asp-action="Edit" asp-route-id="@Model.Id">
+
+                    @Html.HiddenFor(x => x.Id)
+
+                    <div class="mb-3 row">
+                        <label asp-for="Name" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" asp-for="Name" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Name)</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="Description" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" asp-for="Description" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Description)</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="Type" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-for="Type" asp-items="Html.GetEnumSelectList<TypeTransport>()">
+                            </select>
+                            <span asp-validation-for="Type" class="alert-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success text-center">@action bus stop</button>
+                @* } *@
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
+}

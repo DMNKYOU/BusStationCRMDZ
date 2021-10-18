@@ -23,7 +23,7 @@ namespace BusStationCRM.BLL.Models
         public DateTime TravelTime { get; set; }
 
         public int NumberSeats { get; set; }
-        public int TicketCost { get; set; }
+        public double TicketCost { get; set; }
 
         public TypeTransport Type { get; set; }
 

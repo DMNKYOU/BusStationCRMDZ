@@ -6,7 +6,7 @@ using BusStationCRM.BLL.Interfaces;
 using BusStationCRM.BLL.Models;
 using BusStationCRM.DAL.Interfaces;
 
-namespace CampusCRM.BLL.Services
+namespace  BusStationCRM.BLL.Services
 {
     public class BusStopsService : IBusStopsService
     {
@@ -46,7 +46,11 @@ namespace CampusCRM.BLL.Services
         public async Task DeleteAsync(int id)
         {
             await _busStopsRepository.DeleteAsync(id);
-        } 
+        }
 
+        public async Task<IAsyncEnumerable<BusStop>> FindAsync(Func<BusStop, bool> predicate)
+        {
+            return await _busStopsRepository.FindAsync(predicate);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
@@ -11,5 +12,6 @@ namespace BusStationCRM.BLL.Interfaces
         Task AddAsync(TEntity entity);//
         Task EditAsync(TEntity entity); //
         Task DeleteAsync(int id);
+        Task<IAsyncEnumerable<TEntity>> FindAsync(Func<TEntity, Boolean> predicate);
     }
 }

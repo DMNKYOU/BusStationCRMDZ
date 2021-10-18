@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using BusStationCRM.BLL.Enums
+@inject IAuthorizationService AuthorizationService
+@model List<TicketModel>
+@{
+    ViewData["Title"] = "Tickets - BusStation";
+}
+
+<div class="text-center">
+    <h1 class="display-4">My tickets</h1>
+    <h1> </h1>
+</div>
+<table class="table text-center table-hover ">
+    <thead class="bg-primary">
+        <tr>
+            <th scope="col" class="text-light"></th>
+            <th scope="col" class="text-light">Voyage info</th>
+            <th scope="col" class="text-light">Departure date</th>
+            <th scope="col" class="text-light">Seat</th>
+            <th scope="col" class="text-light">Passenger</th>
+            <th scope="col" class="text-light">Document number</th>
+            <th scope="col" class="text-light">Status</th>
+            <th scope="col" class="text-light"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td scope="col">#@item.Id</td>
+            <td scope="col">@item.Order.Voyage.Name</td>
+            <td scope="col">@item.Order.Voyage.DepartureInfo</td>
+            <td scope="col">@item.SeatNumber</td>
+            <td scope="col">@item.User.FirstName @item.User.LastName</td>
+            <td scope="col">@item.User.Id</td>
+            <td scope="col">@item.Status</td>
+            @if (item.Status == Status.Reserved)
+            {
+                <td scope="col">
+                    <div class="btn-secondary">
+                        <a class="btn btn-secondary" asp-controller="Tickets" asp-action="BuyReservedTicket" asp-route-id="@item.Id">Buy</a>
+                    </div>
+                </td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
