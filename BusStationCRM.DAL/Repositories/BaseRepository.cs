@@ -19,9 +19,9 @@ namespace BusStationCRM.DAL.Repositories
             _entities = context.Set<TEntity>();
         }
 
-        public Task<IAsyncEnumerable<TEntity>> FindAsync(Func<TEntity, bool> predicate)/////////
+        public async Task<IAsyncEnumerable<TEntity>> FindAsync(Func<TEntity, bool> predicate)/////////
         {
-            return Task.FromResult(GetAllAsync().Result.ToAsyncEnumerable().Where(predicate));
+            return (await GetAllAsync()).Where(predicate).ToAsyncEnumerable();
         }
 
         public virtual async Task<TEntity> GetAsync(int id) ////////////////////////////////////maybe override

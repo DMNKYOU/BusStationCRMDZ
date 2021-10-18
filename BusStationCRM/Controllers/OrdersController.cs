@@ -21,7 +21,7 @@ namespace BusStationCRM.Controllers
         private readonly ITicketsService _ticketsService;
         private readonly IOrdersService _ordersService;
         private readonly IVoyagesService _voyagesService;
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> _userManager;
 
         private readonly IMapper _mapper;
 
@@ -35,7 +35,7 @@ namespace BusStationCRM.Controllers
             _ordersService = ordersService;
             _ticketsService = ticketsService;
             _voyagesService = voyagesService;
-            userManager = manager;
+            _userManager = manager;
 
         }
 
@@ -44,7 +44,7 @@ namespace BusStationCRM.Controllers
         {
             try
             {
-                var user = await userManager.GetUserAsync(User);
+                var user = await _userManager.GetUserAsync(User);
                 var ordersAll = await _ordersService.FindAsync(c=> c.UserId == user.Id);
                 var resList = _mapper.Map<List<Order>, List<OrderModel>>(await ordersAll.ToListAsync());
 
@@ -54,7 +54,6 @@ namespace BusStationCRM.Controllers
             {
                 _logger.LogError(ex.ToString());
                 return RedirectToAction("Error", "Error", new { @statusCode = 500 });
-                return StatusCode(500);
             }
         }
         // GET: /Add
@@ -63,6 +62,7 @@ namespace BusStationCRM.Controllers
         {
             if(!(voyageId.HasValue && idStatusOrder.HasValue))
                 return RedirectToAction("Index", "Voyages");
+
             var voyage = _mapper.Map<VoyageModel>(await _voyagesService.GetByIdAsync(voyageId.Value));
             var resModel = new OrderModel()
             {
@@ -85,19 +85,8 @@ namespace BusStationCRM.Controllers
                 if(orderModel.Voyage.NumberSeats < 1)
                     return RedirectToAction("Index", "Voyages");
 
-                orderModel.Voyage.NumberSeats -= 1;
-                var voyage = _mapper.Map<Voyage>(orderModel.Voyage);
-                orderModel.Voyage = null;
-                orderModel.User = await userManager.GetUserAsync(User);
-                await _ordersService.AddAsync(_mapper.Map<Order>(orderModel));
-                await _voyagesService.EditAsync(voyage);
-                await _ticketsService.AddAsync(new Ticket()
-                {
-                    SeatNumber = voyage.NumberSeats + 1, 
-                    Status = orderModel.Status, 
-                    Order = _mapper.Map<Order>(orderModel),
-                    User = await userManager.GetUserAsync(User)
-                });
+                orderModel.User = await _userManager.GetUserAsync(User);
+                await _ordersService.AddOrderAndTicket(_mapper.Map<Order>(orderModel));
             }
             catch (Exception ex)
             {

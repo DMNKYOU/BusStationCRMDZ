@@ -7,5 +7,6 @@ namespace BusStationCRM.BLL.Interfaces
 {
     public interface ITicketsService: IEntityService<Ticket>
     {
+        Task UpdateStatusTicketOrder(Ticket ticket);
     }
 }

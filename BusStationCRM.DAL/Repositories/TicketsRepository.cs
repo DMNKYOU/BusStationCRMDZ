@@ -29,6 +29,7 @@ namespace BusStationCRM.DAL.Repositories
         {
             return _context.Tickets
                 .Include(s => s.Order)
+                .Include(s => s.Order.Voyage)
                 .Include(s => s.User)
                 .ToListAsync();
         }

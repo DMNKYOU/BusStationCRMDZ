@@ -11,10 +11,14 @@ namespace  BusStationCRM.BLL.Services
     public class OrdersService : IOrdersService
     {
         private readonly IRepositoryAsync<Order> _ordersRepository;
+        private readonly ITicketsService _ticketsService;
+        private readonly IVoyagesService _voyagesService;
 
-        public OrdersService(IRepositoryAsync<Order> ordersRepository)
+        public OrdersService(IRepositoryAsync<Order> ordersRepository, ITicketsService ticketsService, IVoyagesService voyagesService)
         {
             _ordersRepository = ordersRepository;
+            _ticketsService = ticketsService;
+            _voyagesService = voyagesService;
         }
 
         public async Task<List<Order>> GetAllAsync()
@@ -26,13 +30,30 @@ namespace  BusStationCRM.BLL.Services
         {
             return await _ordersRepository.GetAsync(id);
         }
-
         public async Task AddAsync(Order entity)
         {
             if (entity == null)
                 throw new ArgumentNullException();
 
             await _ordersRepository.CreateAsync(entity);
+        }
+        public async Task AddOrderAndTicket(Order entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException();
+
+            entity.Voyage.NumberSeats -= 1;
+            var seatNumber = entity.Voyage.NumberSeats + 1;
+            await _voyagesService.EditAsync(entity.Voyage);
+
+            entity.Voyage = null;
+            await _ticketsService.AddAsync(new Ticket()
+            {
+                SeatNumber = seatNumber,
+                Status = entity.Status,
+                Order = entity,
+                User = entity.User
+            });
         }
 
         public async Task EditAsync(Order entity)

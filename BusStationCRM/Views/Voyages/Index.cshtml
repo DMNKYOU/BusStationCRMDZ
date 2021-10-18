@@ -35,35 +35,35 @@
     @foreach (var entity in Model)
     {
         <tr>
-            <th scope="col">@entity.Number</th>
-            <th scope="col">@entity.Name</th>
-            <th scope="col">@entity.DepartureInfo</th>
-            <th scope="col">@entity.ArrivalInfo</th>
-            <th scope="col">@entity.TravelTime</th>
-            <th scope="col">@entity.NumberSeats</th>
-            <th scope="col">@entity.TicketCost</th>
-            <th scope="col">@entity.Type</th>
+            <td scope="col">@entity.Number</td>
+            <td scope="col">@entity.Name</td>
+            <td scope="col">@entity.DepartureInfo</td>
+            <td scope="col">@entity.ArrivalInfo</td>
+            <td scope="col">@entity.TravelTime</td>
+            <td scope="col">@entity.NumberSeats</td>
+            <td scope="col">@entity.TicketCost</td>
+            <td scope="col">@entity.Type</td>
             @if (entity.BusStopDeparture != null)
             {
-                <th scope="col">@entity.BusStopDeparture.Name</th>
+                <td scope="col">@entity.BusStopDeparture.Name</td>
             }
             else
             {
-                <th scope="col"></th>
+                <td scope="col"></td>
             }
             @if (entity.BusStopArrival != null)
             {
-                <th scope="col">@entity.BusStopArrival.Name</th>
+                <td scope="col">@entity.BusStopArrival.Name</td>
             }
             else
             {
-                <th scope="col"></th>
+                <td scope="col"></td>
             }
             @if (User.Identity.IsAuthenticated)
             {
                 if (entity.NumberSeats >= 1)
                 {
-                    <th scope="col">
+                    <td scope="col">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <div class="btn-secondary">
                                 <a class="btn btn-secondary" asp-controller="Orders" asp-action="Add" asp-route-voyageId="@entity.Id" asp-route-idStatusOrder="@((int)Status.BoughtOut)">Buy</a>
@@ -72,7 +72,7 @@
                                 <a class="btn btn-secondary" asp-controller="Orders" asp-action="Add" asp-route-voyageId="@entity.Id" asp-route-idStatusOrder="@((int)Status.Reserved)">Reserve</a>
                             </div>
                         </div>
-                    </th>
+                    </td>
                 }
                 //@if (User.IsInRole("Admin"))
                 <th scope="col">
