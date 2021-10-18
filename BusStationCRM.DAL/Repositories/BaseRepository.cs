@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BusStationCRM.DAL.Contexts;
 using BusStationCRM.DAL.Interfaces;
@@ -20,10 +19,9 @@ namespace BusStationCRM.DAL.Repositories
             _entities = context.Set<TEntity>();
         }
 
-        public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
+        public Task<IAsyncEnumerable<TEntity>> FindAsync(Func<TEntity, bool> predicate)/////////
         {
-            return _entities.AsEnumerable().Where(predicate).ToList();
-            //return GetAllAsync().Result.AsEnumerable().Where(predicate).ToList();
+            return Task.FromResult(GetAllAsync().Result.ToAsyncEnumerable().Where(predicate));
         }
 
         public virtual async Task<TEntity> GetAsync(int id) ////////////////////////////////////maybe override
@@ -33,7 +31,7 @@ namespace BusStationCRM.DAL.Repositories
 
         public virtual async Task<List<TEntity>> GetAllAsync()/////////////////////////// should be override
         {
-            return await _entities.ToListAsync();
+            return await _entities.AsQueryable().ToListAsync();
         }
 
         public async Task CreateAsync(TEntity item)

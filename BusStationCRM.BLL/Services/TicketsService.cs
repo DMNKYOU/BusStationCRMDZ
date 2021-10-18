@@ -46,7 +46,11 @@ namespace  BusStationCRM.BLL.Services
         public async Task DeleteAsync(int id)
         {
             await _ticketsRepository.DeleteAsync(id);
-        } 
+        }
 
+        public async Task<IAsyncEnumerable<Ticket>> FindAsync(Func<Ticket, bool> predicate)
+        {
+            return await _ticketsRepository.FindAsync(predicate);
+        }
     }
 }

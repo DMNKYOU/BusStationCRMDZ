@@ -23,6 +23,7 @@ namespace BusStationCRM.Models
         public VoyageModel Voyage { get; set; }
 
         public TicketModel Ticket { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
     }
 }
