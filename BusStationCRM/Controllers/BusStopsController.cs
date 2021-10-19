@@ -41,7 +41,7 @@ namespace BusStationCRM.Controllers
             {
                 var stops = await _busStopsService.GetAllAsync();
                 var resList = _mapper.Map<List<BusStop>, List<BusStopModel>>(stops);
-                return View(new Views.BusStops.Index()
+                return View(new Views.BusStops.BusStopsIndexModel()
                 {
                     BusStops = resList,
                     SearchTerm = null
@@ -129,7 +129,7 @@ namespace BusStationCRM.Controllers
         {
             var courses = await _busStopsService.Search(search);
 
-            return View("Index", new Views.BusStops.Index()
+            return View("Index", new Views.BusStops.BusStopsIndexModel()
             {
                 BusStops = _mapper.Map<IEnumerable<BusStop>, List<BusStopModel>>(courses),
                 SearchTerm = search

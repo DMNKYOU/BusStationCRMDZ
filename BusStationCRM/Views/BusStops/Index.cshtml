@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
-@model BusStationCRM.Views.BusStops.Index
+@model BusStationCRM.Views.BusStops.BusStopsIndexModel
 @{
     ViewData["Title"] = "Bus Stops - BusStationCRM";
 }
@@ -20,9 +20,6 @@
                     Search
                 </button>
             </div>
-            @*<div class="pl-3">
-                @Html.ActionLink("Advanced", "Filter", "Courses")
-            </div>*@
         </div>
     </div>
 }

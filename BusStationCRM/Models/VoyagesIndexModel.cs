@@ -3,11 +3,11 @@ using BusStationCRM.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BusStationCRM.Views.BusStops
+namespace BusStationCRM.Views.Voyages
 {
-    public class Index : PageModel
+    public class VoyagesIndexModel : PageModel
     {
-        public List<BusStopModel> BusStops { get; set; }
+        public List<VoyageModel> Voyages { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }

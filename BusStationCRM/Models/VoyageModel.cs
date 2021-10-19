@@ -15,7 +15,7 @@ namespace BusStationCRM.Models
         public int Id { get; set; }
 
         [Required]
-        [RegularExpression(@"^[-+]?[0-9]*\.?[0-9]+$", ErrorMessage = "This field can be contain only numbers")]
+        [Range(0, int.MaxValue)]
         public int Number { get; set; }
 
         [Required]

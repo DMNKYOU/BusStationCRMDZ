@@ -40,7 +40,7 @@ namespace BusStationCRM.Controllers
                 var voyages = await _voyagesService.GetAllAsync();
                 var resList = _mapper.Map<List<Voyage>, List<VoyageModel>>(voyages);
 
-                return View( new Views.Voyages.Index() { Voyages = resList });
+                return View( new Views.Voyages.VoyagesIndexModel() { Voyages = resList });
             }
             catch (Exception ex)
             {
@@ -127,7 +127,7 @@ namespace BusStationCRM.Controllers
         {
             var voyages = await _voyagesService.Search(search);
 
-            return View("Index", new Views.Voyages.Index()
+            return View("Index", new Views.Voyages.VoyagesIndexModel()
             {
                 Voyages = _mapper.Map<IEnumerable<Voyage>, List<VoyageModel>>(voyages),
                 SearchTerm = search
