@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using BusStationCRM.BLL.Extensions;
 using BusStationCRM.BLL.Interfaces;
 using BusStationCRM.BLL.Models;
 using BusStationCRM.DAL.Interfaces;
+using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace  BusStationCRM.BLL.Services
 {
@@ -51,6 +54,16 @@ namespace  BusStationCRM.BLL.Services
         public async Task<IAsyncEnumerable<BusStop>> FindAsync(Func<BusStop, bool> predicate)
         {
             return await _busStopsRepository.FindAsync(predicate);
+        }
+
+        public async Task<IEnumerable<BusStop>> Search(string search)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return await _busStopsRepository.GetAllAsync();
+            var resault = await _busStopsRepository.FindAsync(c =>
+                c.Name.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase) ||
+                c.Description.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase));
+            return await resault.ToListAsync();
         }
     }
 }

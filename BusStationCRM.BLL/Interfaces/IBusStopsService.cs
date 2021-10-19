@@ -7,5 +7,6 @@ namespace BusStationCRM.BLL.Interfaces
 {
     public interface IBusStopsService: IEntityService<BusStop>
     {
+        Task<IEnumerable<BusStop>> Search(string search);
     }
 }
