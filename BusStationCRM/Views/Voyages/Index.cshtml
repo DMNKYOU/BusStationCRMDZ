@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @using BusStationCRM.BLL.Enums
 @inject IAuthorizationService AuthorizationService
-@model List<VoyageModel>
+@model BusStationCRM.Views.Voyages.Index
 @{
     ViewData["Title"] = "Voyages - BusStationCRM";
 }
@@ -10,6 +10,22 @@
     <h1 class="display-4">Voyages list</h1>
     <h1> </h1>
 </div>
+@using (Html.BeginForm("Search", "Voyages", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Insert search data" asp-for="SearchTerm" name="search" />
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit">
+                    Search
+                </button>
+            </div>
+            @*<div class="pl-3">
+                    @Html.ActionLink("Advanced", "Filter", "Courses")
+                </div>*@
+        </div>
+    </div>
+}
 <table class="table text-center table-hover ">
     <thead class="bg-primary">
         <tr>
@@ -26,69 +42,69 @@
             @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
             {
                 <th scope="col" class="text-light"></th>
-               // @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+                // @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
                 <th scope="col" class="text-light"></th>
             }
         </tr>
     </thead>
     <tbody>
-    @foreach (var entity in Model)
-    {
-        <tr>
-            <td scope="col">@entity.Number</td>
-            <td scope="col">@entity.Name</td>
-            <td scope="col">@entity.DepartureInfo</td>
-            <td scope="col">@entity.ArrivalInfo</td>
-            <td scope="col">@entity.TravelTime</td>
-            <td scope="col">@entity.NumberSeats</td>
-            <td scope="col">@entity.TicketCost</td>
-            <td scope="col">@entity.Type</td>
-            @if (entity.BusStopDeparture != null)
-            {
-                <td scope="col">@entity.BusStopDeparture.Name</td>
-            }
-            else
-            {
-                <td scope="col"></td>
-            }
-            @if (entity.BusStopArrival != null)
-            {
-                <td scope="col">@entity.BusStopArrival.Name</td>
-            }
-            else
-            {
-                <td scope="col"></td>
-            }
-            @if (User.Identity.IsAuthenticated)
-            {
-                if (entity.NumberSeats >= 1)
+        @foreach (var entity in Model.Voyages)
+        {
+            <tr>
+                <td scope="col">@entity.Number</td>
+                <td scope="col">@entity.Name</td>
+                <td scope="col">@entity.DepartureInfo</td>
+                <td scope="col">@entity.ArrivalInfo</td>
+                <td scope="col">@entity.TravelTime</td>
+                <td scope="col">@entity.NumberSeats</td>
+                <td scope="col">@entity.TicketCost</td>
+                <td scope="col">@entity.Type</td>
+                @if (entity.BusStopDeparture != null)
                 {
-                    <td scope="col">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <div class="btn-secondary">
-                                <a class="btn btn-secondary" asp-controller="Orders" asp-action="Add" asp-route-voyageId="@entity.Id" asp-route-idStatusOrder="@((int)Status.BoughtOut)">Buy</a>
-                            </div>
-                            <div class="btn-secondary">
-                                <a class="btn btn-secondary" asp-controller="Orders" asp-action="Add" asp-route-voyageId="@entity.Id" asp-route-idStatusOrder="@((int)Status.Reserved)">Reserve</a>
-                            </div>
-                        </div>
-                    </td>
+                    <td scope="col">@entity.BusStopDeparture.Name</td>
                 }
-                //@if (User.IsInRole("Admin"))
-                <th scope="col">
-                    <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            •••
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" asp-controller="Voyages" asp-action="Edit" asp-route-id="@entity.Id">Edit</a>
-                            <a class="dropdown-item" asp-controller="Voyages" asp-action="Delete" asp-route-id="@entity.Id">Delete</a>
+                else
+                {
+                    <td scope="col"></td>
+                }
+                @if (entity.BusStopArrival != null)
+                {
+                    <td scope="col">@entity.BusStopArrival.Name</td>
+                }
+                else
+                {
+                    <td scope="col"></td>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (entity.NumberSeats >= 1)
+                    {
+                        <td scope="col">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <div class="btn-secondary">
+                                    <a class="btn btn-secondary" asp-controller="Orders" asp-action="Add" asp-route-voyageId="@entity.Id" asp-route-idStatusOrder="@((int)Status.BoughtOut)">Buy</a>
+                                </div>
+                                <div class="btn-secondary">
+                                    <a class="btn btn-secondary" asp-controller="Orders" asp-action="Add" asp-route-voyageId="@entity.Id" asp-route-idStatusOrder="@((int)Status.Reserved)">Reserve</a>
+                                </div>
+                            </div>
+                        </td>
+                    }
+                    //@if (User.IsInRole("Admin"))
+                    <th scope="col">
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                •••
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" asp-controller="Voyages" asp-action="Edit" asp-route-id="@entity.Id">Edit</a>
+                                <a class="dropdown-item" asp-controller="Voyages" asp-action="Delete" asp-route-id="@entity.Id">Delete</a>
+                            </div>
                         </div>
-                    </div>
-                </th>
-            }
-        </tr>
-    }
+                    </th>
+                }
+            </tr>
+        }
     </tbody>
 </table>
 @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))

@@ -16,21 +16,19 @@ namespace BusStationCRM.Controllers
 
         private readonly IVoyagesService _voyagesService;
         private readonly IBusStopsService _busStopsService;
-        private readonly IOrdersService _ordersService;
 
         private readonly IMapper _mapper;
 
         private readonly ILogger _logger;
 
         public VoyagesController(IMapper mapper, IVoyagesService voyagesService,
-            IOrdersService ordService,IBusStopsService busStopsService,
+            IBusStopsService busStopsService,
             ILogger<BusStopsController> logger)
         {
             _mapper = mapper;
             _logger = logger;
             _voyagesService = voyagesService;
             _busStopsService = busStopsService;
-            _ordersService = ordService;
         }
 
         [AllowAnonymous]
@@ -42,7 +40,7 @@ namespace BusStationCRM.Controllers
                 var voyages = await _voyagesService.GetAllAsync();
                 var resList = _mapper.Map<List<Voyage>, List<VoyageModel>>(voyages);
 
-                return View(resList);
+                return View( new Views.Voyages.Index() { Voyages = resList });
             }
             catch (Exception ex)
             {
@@ -124,5 +122,16 @@ namespace BusStationCRM.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> SearchAsync(string search)
+        {
+            var voyages = await _voyagesService.Search(search);
+
+            return View("Index", new Views.Voyages.Index()
+            {
+                Voyages = _mapper.Map<IEnumerable<Voyage>, List<VoyageModel>>(voyages),
+                SearchTerm = search
+            });
+        }
     }
 }

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using BusStationCRM.BLL.Extensions;
 using BusStationCRM.BLL.Interfaces;
 using BusStationCRM.BLL.Models;
 using BusStationCRM.DAL.Interfaces;
@@ -53,6 +55,20 @@ namespace  BusStationCRM.BLL.Services
         public async Task<IAsyncEnumerable<Voyage>> FindAsync(Func<Voyage, bool> predicate)
         {
             return await _voyagesService.FindAsync(predicate);
+        }
+
+        public async Task<IEnumerable<Voyage>> Search(string search)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return await _voyagesService.GetAllAsync();
+
+            search = search.NormalizeSearchString();
+            var resault = await _voyagesService.FindAsync(c =>
+                c.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                c.BusStopDeparture.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                c.BusStopArrival.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
+
+            return await resault.ToListAsync();
         }
     }
 }

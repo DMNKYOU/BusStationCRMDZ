@@ -60,9 +60,12 @@ namespace  BusStationCRM.BLL.Services
         {
             if (string.IsNullOrWhiteSpace(search))
                 return await _busStopsRepository.GetAllAsync();
+
+            search = search.NormalizeSearchString();
             var resault = await _busStopsRepository.FindAsync(c =>
-                c.Name.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase) ||
-                c.Description.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase));
+                c.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                c.Description.Contains(search, StringComparison.OrdinalIgnoreCase));
+
             return await resault.ToListAsync();
         }
     }

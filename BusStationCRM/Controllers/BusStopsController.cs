@@ -10,6 +10,7 @@ using BusStationCRM.BLL.Models;
 using BusStationCRM.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using BusStationCRM.Views.BusStops;
 
 namespace BusStationCRM.Controllers
 {
@@ -40,7 +41,11 @@ namespace BusStationCRM.Controllers
             {
                 var stops = await _busStopsService.GetAllAsync();
                 var resList = _mapper.Map<List<BusStop>, List<BusStopModel>>(stops);
-                return View(resList);
+                return View(new Views.BusStops.Index()
+                {
+                    BusStops = resList,
+                    SearchTerm = null
+                });
             }
             catch (Exception ex)
             {
@@ -119,11 +124,17 @@ namespace BusStationCRM.Controllers
             }
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> SearchAsync(string search)
         {
             var courses = await _busStopsService.Search(search);
 
-            return View("Index", _mapper.Map<IEnumerable<BusStop>, List<BusStopModel>>(courses));
+            return View("Index", new Views.BusStops.Index()
+            {
+                BusStops = _mapper.Map<IEnumerable<BusStop>, List<BusStopModel>>(courses),
+                SearchTerm = search
+                
+            });
         }
     }
 }
