@@ -19,7 +19,7 @@ namespace BusStationCRM.BLL.Models
         public DateTime ArrivalInfo { get; set; }
 
         [DataType(DataType.Time)]
-        [DisplayFormat(ApplyFormatInEditMode = true)]///////////////ADD ATTR OTPR-PRIB
+        [DisplayFormat(ApplyFormatInEditMode = true)]
         public DateTime TravelTime { get; set; }
 
         public int NumberSeats { get; set; }

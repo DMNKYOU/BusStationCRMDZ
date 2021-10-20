@@ -10,6 +10,7 @@ using BusStationCRM.BLL.Models;
 using BusStationCRM.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using BusStationCRM.Views.BusStops;
 
 namespace BusStationCRM.Controllers
 {
@@ -40,8 +41,11 @@ namespace BusStationCRM.Controllers
             {
                 var stops = await _busStopsService.GetAllAsync();
                 var resList = _mapper.Map<List<BusStop>, List<BusStopModel>>(stops);
-
-                return View(resList);
+                return View(new Views.BusStops.BusStopsIndexModel()
+                {
+                    BusStops = resList,
+                    SearchTerm = null
+                });
             }
             catch (Exception ex)
             {
@@ -49,43 +53,6 @@ namespace BusStationCRM.Controllers
                 return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
         }
-
-        //// GET: BusStopsController/Add
-        //[HttpGet]
-        //public IActionResult AddAsync()   ///////////change type
-        //{
-        //    ViewBag.Action = "Add";
-
-        //    return View("Edit", new BusStopModel());
-        //}
-
-        //// POST: BusStopsController/Add
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        ////[Authorize(Roles = "Admin")]
-        //public async Task<IActionResult> AddAsync(BusStopModel stopModel)
-        //{
-
-        //    stopModel.Name = stopModel.Name.Trim();
-        //    stopModel.Description = stopModel.Description.Trim();
-        //    if (!ModelState.IsValid)
-        //    {
-        //        ViewBag.Action = "Add";
-        //        return View("Edit", stopModel);
-        //    }
-
-        //    try
-        //    {
-        //        await _busStopsService.AddAsync(_mapper.Map<BusStop>(stopModel));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.ToString());
-        //        return StatusCode(500);
-        //    }
-
-        //    return RedirectToAction("Index", "BusStops");
-        //}
 
         //method used for add and edit
         [HttpGet]
@@ -155,6 +122,19 @@ namespace BusStationCRM.Controllers
                 _logger.LogError(ex.ToString());
                 return RedirectToAction("Error", "Error", new { @statusCode = 500 });
             }
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> SearchAsync(string search)
+        {
+            var courses = await _busStopsService.Search(search);
+
+            return View("Index", new Views.BusStops.BusStopsIndexModel()
+            {
+                BusStops = _mapper.Map<IEnumerable<BusStop>, List<BusStopModel>>(courses),
+                SearchTerm = search
+                
+            });
         }
     }
 }

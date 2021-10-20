@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusStationCRM.BLL.Models;
 using BusStationCRM.DAL.Contexts;
-using BusStationCRM.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusStationCRM.DAL.Repositories

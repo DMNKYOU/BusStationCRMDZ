@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
 using BusStationCRM.BLL.Enums;
+using BusStationCRM.Validation;
 
 namespace BusStationCRM.Models
 {
@@ -15,7 +16,7 @@ namespace BusStationCRM.Models
         public int Id { get; set; }
 
         [Required]
-        [RegularExpression(@"^[-+]?[0-9]*\.?[0-9]+$", ErrorMessage = "This field can be contain only numbers")]
+        [Range(0, int.MaxValue)]
         public int Number { get; set; }
 
         [Required]
@@ -24,22 +25,25 @@ namespace BusStationCRM.Models
         [Display(Name = "Name", Prompt = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Departure time")]
+        [Display(Name = "Departure time")] 
+        [DateNotInThePast(ErrorMessage = "Should de not in the past")]
         public DateTime DepartureInfo { get; set; }
 
         [Display(Name = "Arrival time")]
+        [DateCorrectRange(ErrorMessage = "Should de more then date departure")]
         public DateTime ArrivalInfo { get; set; }
 
         [DataType(DataType.Time)]
-        [DisplayFormat(ApplyFormatInEditMode = true)]///////////////ADD ATTR
+        [DisplayFormat(ApplyFormatInEditMode = true)]
         public DateTime TravelTime { get; set; }
 
         [Required]
-        [RegularExpression(@"^[-+]?[0-9]*\.?[0-9]+$", ErrorMessage = "This field can be contain only numbers")]
-        [Display(Name = "Arrival seats")]
+        [Range(1, int.MaxValue)]
+        [Display(Name = "Available seats")]
         public int NumberSeats { get; set; }
 
         [Required]
+        [RegularExpression(@"^[+]?[0-9]*\.?[0-9]+$", ErrorMessage = "This field can be contain only numbers")]
         [Display(Name = "Ticket price")]
         public double TicketCost { get; set; }
 

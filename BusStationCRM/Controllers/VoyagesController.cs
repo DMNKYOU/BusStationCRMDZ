@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusStationCRM.BLL.Interfaces;
 using BusStationCRM.BLL.Models;
+using BusStationCRM.BLL.Models.Search;
 using BusStationCRM.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
@@ -19,21 +17,19 @@ namespace BusStationCRM.Controllers
 
         private readonly IVoyagesService _voyagesService;
         private readonly IBusStopsService _busStopsService;
-        private readonly IOrdersService _ordersService;
 
         private readonly IMapper _mapper;
 
         private readonly ILogger _logger;
 
         public VoyagesController(IMapper mapper, IVoyagesService voyagesService,
-            IOrdersService ordService,IBusStopsService busStopsService,
+            IBusStopsService busStopsService,
             ILogger<BusStopsController> logger)
         {
             _mapper = mapper;
             _logger = logger;
             _voyagesService = voyagesService;
             _busStopsService = busStopsService;
-            _ordersService = ordService;
         }
 
         [AllowAnonymous]
@@ -45,7 +41,7 @@ namespace BusStationCRM.Controllers
                 var voyages = await _voyagesService.GetAllAsync();
                 var resList = _mapper.Map<List<Voyage>, List<VoyageModel>>(voyages);
 
-                return View(resList);
+                return View( new Views.Voyages.VoyagesIndexModel() { Voyages = resList });
             }
             catch (Exception ex)
             {
@@ -86,7 +82,6 @@ namespace BusStationCRM.Controllers
         {
 
             voyageModel.Name = voyageModel.Name.Trim();
-            //voyageModel.TravelTime = (voyageModel.ArrivalInfo.Subtract(voyageModel.DepartureInfo)).To;
             if (!ModelState.IsValid)
             {
                 ViewBag.BusStops = _mapper.Map<List<BusStop>, List<BusStopModel>>(await _busStopsService.GetAllAsync());
@@ -127,5 +122,32 @@ namespace BusStationCRM.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> SearchAsync(string search)
+        {
+            var voyages = await _voyagesService.Search(search);
+
+            return View("Index", new Views.Voyages.VoyagesIndexModel()
+            {
+                Voyages = _mapper.Map<IEnumerable<Voyage>, List<VoyageModel>>(voyages),
+                SearchTerm = search
+            });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Filter()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async System.Threading.Tasks.Task<IActionResult> FilterAsync(VoyageFilterModel model)
+        {
+            var voyagesFiltered = await _voyagesService.Filter(_mapper.Map<VoyageFilter>(model));
+
+            return View("Index", new Views.Voyages.VoyagesIndexModel() { Voyages = _mapper.Map<IEnumerable<Voyage>, List<VoyageModel>>(voyagesFiltered) });
+        }
     }
 }

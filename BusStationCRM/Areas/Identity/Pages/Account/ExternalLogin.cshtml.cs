@@ -59,7 +59,7 @@ namespace BusStationCRM.Areas.Identity.Pages.Account
 
             [PersonalData]
             [DataType(DataType.Date)]
-            [DateInThePast(ErrorMessage = "The date must be more then 1 year")]
+            [DateInThePast(ErrorMessage = "The age must be more then 1 year and less 110")]
             public DateTime BirthDate { get; set; }
 
             [Required]

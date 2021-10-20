@@ -1,14 +1,29 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
-@model List<BusStopModel>
+@model BusStationCRM.Views.BusStops.BusStopsIndexModel
 @{
     ViewData["Title"] = "Bus Stops - BusStationCRM";
 }
 
-<div class="text-center">
+<div class="text-center p-2">
     <h1 class="display-4">Bus stops information</h1>
     <h1> </h1>
 </div>
+
+@using (Html.BeginForm("Search", "BusStops", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Insert search data" asp-for="SearchTerm" name="search" />
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
 <table class="table text-center table-hover ">
     <thead class="bg-primary">
     <tr>
@@ -22,7 +37,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var stop in Model)
+    @foreach (var stop in Model.BusStops)
     {
         <tr>
             <th scope="col">@stop.Name</th>
