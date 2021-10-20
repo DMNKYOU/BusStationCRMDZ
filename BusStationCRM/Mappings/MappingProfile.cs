@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using BusStationCRM.BLL.Models;
+using BusStationCRM.BLL.Models.Search;
 using BusStationCRM.Models;
 
 namespace CampusCRM.MVC.Mappings
@@ -20,6 +21,7 @@ namespace CampusCRM.MVC.Mappings
                     opts => opts.MapFrom(source => source.Voyage))
                 .ReverseMap();
             CreateMap<Ticket, TicketModel>().ReverseMap();
+            CreateMap<VoyageFilterModel, VoyageFilter>().ReverseMap();
         }
     }
 }

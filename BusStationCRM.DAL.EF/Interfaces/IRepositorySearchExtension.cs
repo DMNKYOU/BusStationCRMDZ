@@ -1,11 +1,13 @@
-﻿using System;
+﻿using BusStationCRM.BLL.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BusStationCRM.BLL.Models.Search;
 
 namespace BusStationCRM.DAL.Interfaces
 {
-    public interface IRepositorySearchExtension<T>: IRepositoryAsync<T> where T : class
+    public interface IVoyagesRepository: IRepositoryAsync<Voyage>
     {
-        Task<IEnumerable<T>> Filter(object filter);
+        Task<IEnumerable<Voyage>> Filter(VoyageFilter filter);
     }
 }

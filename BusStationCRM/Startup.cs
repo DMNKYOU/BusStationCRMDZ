@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -85,7 +86,7 @@ namespace BusStationCRM
             services.AddScoped<IRepositoryAsync<BusStop>, BusStopsRepository>();
             services.AddScoped<IRepositoryAsync<Order>, OrdersRepository>();
             services.AddScoped<IRepositoryAsync<Ticket>, TicketsRepository>();
-            services.AddScoped<IRepositoryAsync<Voyage>, VoyagesRepository>();
+            services.AddScoped<IVoyagesRepository, VoyagesRepository>();
 
             services.AddScoped<IBusStopsService, BusStopsService>();
             services.AddScoped<IVoyagesService, VoyagesService>();
@@ -109,6 +110,10 @@ namespace BusStationCRM
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            var cultureInfo = new CultureInfo("en-US"); 
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo; 
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

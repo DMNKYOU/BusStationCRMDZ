@@ -13,9 +13,9 @@ namespace  BusStationCRM.BLL.Services
 {
     public class VoyagesService : IVoyagesService
     {
-        private readonly IRepositoryAsync<Voyage> _voyagesRepository;
+        private readonly IVoyagesRepository _voyagesRepository;
 
-        public VoyagesService(IRepositoryAsync<Voyage> voyageRepository)
+        public VoyagesService(IVoyagesRepository voyageRepository)
         {
             _voyagesRepository = voyageRepository;
         }
@@ -43,6 +43,7 @@ namespace  BusStationCRM.BLL.Services
         {
             if (entity == null)
                 throw new ArgumentNullException();
+
             entity.TravelTime = new DateTime() + (entity.ArrivalInfo - entity.DepartureInfo);
             entity.NumberSeats = entity.NumberSeats >= 0 ? entity.NumberSeats : 0;
             await _voyagesRepository.UpdateAsync(entity);
@@ -74,7 +75,7 @@ namespace  BusStationCRM.BLL.Services
 
         public async Task<IEnumerable<Voyage>> Filter(VoyageFilter filter)
         {
-            return await _voyagesRepository.GetAllAsync(); //Filter(filter);
+            return await _voyagesRepository.Filter(filter);
         }
     }
 }

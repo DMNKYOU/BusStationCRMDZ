@@ -20,9 +20,9 @@
                     Search
                 </button>
             </div>
-            @*<div class="pl-3">
-                    @Html.ActionLink("Advanced", "Filter", "Courses")
-                </div>*@
+            <div class="pl-3 text-md-center">
+                @Html.ActionLink("Advanced", "Filter", "Voyages")
+            </div>
         </div>
     </div>
 }
@@ -35,10 +35,10 @@
             <th scope="col" class="text-light">Arrival Info</th>
             <th scope="col" class="text-light">Travel time</th>
             <th scope="col" class="text-light">Available seats</th>
-            <th scope="col" class="text-light">Ticket cost</th>
             <th scope="col" class="text-light">Type</th>
-            <th scope="col" class="text-light">Departure</th>
-            <th scope="col" class="text-light">Arrive</th>
+            <th scope="col" class="text-light">Departure stop</th>
+            <th scope="col" class="text-light">Arrive stop</th>
+            <th scope="col" class="text-light">Ticket cost</th>
             @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
             {
                 <th scope="col" class="text-light"></th>
@@ -57,7 +57,6 @@
                 <td scope="col">@entity.ArrivalInfo</td>
                 <td scope="col">@entity.TravelTime</td>
                 <td scope="col">@entity.NumberSeats</td>
-                <td scope="col">@entity.TicketCost</td>
                 <td scope="col">@entity.Type</td>
                 @if (entity.BusStopDeparture != null)
                 {
@@ -75,6 +74,7 @@
                 {
                     <td scope="col"></td>
                 }
+                <td scope="col">@entity.TicketCost$</td>
                 @if (User.Identity.IsAuthenticated)
                 {
                     if (entity.NumberSeats >= 1)
@@ -110,6 +110,6 @@
 @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
 {
     <div class="text-white">
-        <a class="btn btn-primary active" asp-controller="Voyages" asp-action="Edit">Add new bus stop</a>
+        <a class="btn btn-primary active" asp-controller="Voyages" asp-action="Edit">Add new voyage</a>
     </div>
 }
