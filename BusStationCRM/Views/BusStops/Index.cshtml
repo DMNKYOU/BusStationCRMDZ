@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model BusStationCRM.Views.BusStops.BusStopsIndexModel
+@{
+    ViewData["Title"] = "Bus Stops - BusStationCRM";
+}
+
+<div class="text-center p-2">
+    <h1 class="display-4">Bus stops information</h1>
+    <h1> </h1>
+</div>
+
+@using (Html.BeginForm("Search", "BusStops", FormMethod.Get))
+{
+    <div class="form-group">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Insert search data" asp-for="SearchTerm" name="search" />
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<table class="table text-center table-hover ">
+    <thead class="bg-primary">
+    <tr>
+        <th scope="col" class="text-light">Name</th>
+        <th scope="col" class="text-light">Description</th>
+        <th scope="col" class="text-light">Type</th>
+        @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+        {
+            <th scope="col" class="text-light"></th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var stop in Model.BusStops)
+    {
+        <tr>
+            <th scope="col">@stop.Name</th>
+            <th scope="col">@stop.Description</th>
+            <th scope="col">@stop.Type</th>
+            @if(User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+            {
+                <th scope="col">
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            •••
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" asp-controller="BusStops" asp-action="Edit" asp-route-id="@stop.Id">Edit</a>
+                            <a class="dropdown-item" asp-controller="BusStops" asp-action="Delete" asp-route-id="@stop.Id">Delete</a>
+                        </div>
+                    </div>
+                </th>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
+@if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+{
+    <div class="text-white">
+        <a class="btn btn-primary active" asp-controller="BusStops" asp-action="Edit">Add new bus stop</a>
+    </div>
+}

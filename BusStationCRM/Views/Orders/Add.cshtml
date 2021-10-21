@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using BusStationCRM.BLL.Enums
+@inject IAuthorizationService AuthorizationService
+@model OrderModel
+@{
+    ViewData["Title"] = "BusStation";
+    var action = Model.Status == Status.Reserved ? "reservation" : "purchase";
+} 
+<div class="text-center p-3">
+    <h1 class="display-4">Information about your order</h1>
+</div>
+<div class="container col-md-6 mt-4">
+
+    <form class="text-center" method="post" asp-controller="Orders" asp-action="Add" asp-route-id="@Model.Id">
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.User)
+        @Html.HiddenFor(x => x.UserId)
+        @Html.HiddenFor(x => x.Status)
+        @Html.HiddenFor(x => x.SeatNumber)
+        @Html.HiddenFor(x => x.VoyageId)
+        @Html.HiddenFor(x => x.Voyage.BusStopArrivalId)
+        @Html.HiddenFor(x => x.Voyage.Id)
+        @Html.HiddenFor(x => x.Voyage.BusStopArrival)
+        @Html.HiddenFor(x => x.Voyage.BusStopDepartureId)
+        @Html.HiddenFor(x => x.Voyage.BusStopDeparture)
+        @Html.HiddenFor(x => x.Voyage.Type)
+        @Html.HiddenFor(x => x.Voyage.BusStops)
+        @Html.HiddenFor(x => x.Voyage.Orders)
+        @Html.HiddenFor(x => x.Voyage.TravelTime)
+        <div class="mb-3 row">
+            <label asp-for="Voyage" class="col-sm-3 col-form-label">Voyage number</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="text" asp-for="Voyage.Number" required readonly="" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Voyage" class="col-sm-3 col-form-label">Voyage name</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="text" asp-for="Voyage.Name" required readonly="" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Voyage.DepartureInfo" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input class="form-control" type="datetime-local" asp-for="Voyage.DepartureInfo" required readonly />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Voyage.ArrivalInfo" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input class="form-control" type="datetime-local" asp-for="Voyage.ArrivalInfo" required readonly />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Voyage.NumberSeats" class="col-sm-3 col-form-label">Seat number</label>
+            <div class="col-sm-9">
+                <input class="form-control" type="number" asp-for="Voyage.NumberSeats" required readonly />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label asp-for="Voyage.NumberSeats" class="col-sm-3 col-form-label">Price</label>
+            <div class="col-sm-9">
+                <input class="form-control" type="number" asp-for="Voyage.TicketCost" required readonly />
+            </div>
+        </div>
+        <div class="col text-center">
+            <button type="submit" class="btn btn-success text-center"> Confirm @action </button>
+        </div>
+    </form>
+</div>
+        

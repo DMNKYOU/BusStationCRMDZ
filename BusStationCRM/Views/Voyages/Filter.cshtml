@@ -1,0 +1,48 @@
+﻿@model VoyageFilterModel
+
+@{ ViewData["Title"] = "Voyage Courses"; }
+
+<h1>Courses Advanced Search</h1>
+
+@using (Html.BeginForm("Filter", "Voyages", FormMethod.Post))
+{
+    <div class="form-group">
+        <label asp-for="Number">Number</label>
+        <input class="form-control" type="number" asp-for="Number"/>
+        <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Number)</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NameContains">Name Contains</label>
+        <input class="form-control" type="text" asp-for="NameContains"/>
+        <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Number)</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DepartureFrom"></label>
+        <input class="form-control" type="datetime-local" asp-for="DepartureFrom"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="ArrivalTo"></label>
+        <input class="form-control" type="datetime-local" asp-for="ArrivalTo"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="DepartureStopNameContains">Departure bus stop contains</label>
+        <input class="form-control" asp-for="DepartureStopNameContains" type="text"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="ArrivalStopNameContains">Arrival bus stop contains</label>
+        <input class="form-control" asp-for="ArrivalStopNameContains" type="text"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="PriceFrom"></label>
+        <input class="form-control" asp-for="PriceFrom" type="number"/>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PriceTo"></label>
+        <input class="form-control" asp-for="PriceTo" type="number"/>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Apply</button>
+    </div>
+}

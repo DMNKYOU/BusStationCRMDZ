@@ -1,0 +1,125 @@
+﻿@using BusStationCRM.BLL.Enums
+@model VoyageModel
+
+@{
+    string action = null;
+    if (Model.Id != 0)
+    {
+        action = "Edit";
+    }
+    else
+    {
+        action = "Add";
+    }
+    ViewData["Title"] = $"{action} student";
+    var stopsAll = (List<BusStopModel>)ViewBag.BusStops;
+}
+<div class="content">
+    <h1>@action voyage</h1>
+    <div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <form method="post" asp-controller="Voyages" asp-action="Edit" asp-route-id="@Model.Id">
+
+                    @Html.HiddenFor(x => x.Id)
+
+                    <div class="mb-3 row">
+                        <label asp-for="Number" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" asp-for="Number" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Number)</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="Name" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" asp-for="Name" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Name)</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="DepartureInfo" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="datetime-local" asp-for="DepartureInfo" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.DepartureInfo)</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="ArrivalInfo" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="datetime-local" asp-for="ArrivalInfo" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.ArrivalInfo)</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="NumberSeats" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="number" asp-for="NumberSeats" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.NumberSeats)</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="TicketCost" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="number" min="0.00" max="10000.00" step="0.01" asp-for="TicketCost" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.TicketCost)</span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="Type" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-for="Type" asp-items="Html.GetEnumSelectList<TypeTransport>()">
+                            </select>
+                            <span asp-validation-for="Type" class="alert-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="BusStopArrivalId" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-for="BusStopArrivalId">
+                                @foreach (var stop in stopsAll)
+                                {
+                                    if (Model != null && stop.Id == Model.BusStopArrivalId)
+                                    {
+                                        <option value="@stop.Id" selected>@stop.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@stop.Id">@stop.Name</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="BusStopArrivalId" class="alert-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="BusStopDepartureId" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-for="BusStopDepartureId">
+                                @foreach (var stop in stopsAll)
+                                {
+                                    if (Model != null && stop.Id == Model.BusStopDepartureId)
+                                    {
+                                        <option value="@stop.Id" selected>@stop.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@stop.Id">@stop.Name</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="BusStopDepartureId" class="alert-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success text-center">@action</button>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
+}

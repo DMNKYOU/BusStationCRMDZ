@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model List<OrderModel>
+@{
+    ViewData["Title"] = "Orders - BusStation";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Orders</h1>
+    <h1> </h1>
+</div>
+<table class="table text-center table-hover ">
+    <thead class="bg-primary">
+        <tr>
+            <th scope="col" class="text-light">Number</th>
+            <th scope="col" class="text-light">Seat</th>
+            <th scope="col" class="text-light">Voyage</th>
+            <th scope="col" class="text-light">Voyage</th>
+            <th scope="col" class="text-light">Status</th>
+            @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+            {
+                <th scope="col" class="text-light"></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var stop in Model)
+    {
+        <tr>
+            <th scope="col">@stop.Id</th>
+            <th scope="col">@stop.SeatNumber</th>
+            <th scope="col">@stop.Voyage.Number</th>
+            <th scope="col">@stop.Voyage.Name</th>
+            <th scope="col">@stop.Status</th>
+            @*if(User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+        {
+            <th scope="col">
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        •••
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" asp-controller="BusStops" asp-action="Edit" asp-route-id="@stop.Id">Edit</a>
+                        <a class="dropdown-item" asp-controller="BusStops" asp-action="Delete" asp-route-id="@stop.Id">Delete</a>
+                    </div>
+                </div>
+            </th>
+        }*@
+        </tr>
+    }
+    </tbody>
+</table>

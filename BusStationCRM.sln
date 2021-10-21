@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM", "BusStationCRM\BusStationCRM.csproj", "{84AB8F71-B1C6-45A1-B371-7D13ADB39066}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0539339-415B-479D-88F1-237C703F2CBF} = {E0539339-415B-479D-88F1-237C703F2CBF}
+		{BDAA239A-BABE-480C-AA61-A20701BF1924} = {BDAA239A-BABE-480C-AA61-A20701BF1924}
+		{BD88B7B0-35E2-4BAB-A127-0BB123D037D9} = {BD88B7B0-35E2-4BAB-A127-0BB123D037D9}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.DAL.EF", "BusStationCRM.DAL\BusStationCRM.DAL.EF.csproj", "{79986908-11D5-4DBD-A180-89A56879D0C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0539339-415B-479D-88F1-237C703F2CBF} = {E0539339-415B-479D-88F1-237C703F2CBF}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.BLL", "BusStationCRM.BLL\BusStationCRM.BLL.csproj", "{BDAA239A-BABE-480C-AA61-A20701BF1924}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0539339-415B-479D-88F1-237C703F2CBF} = {E0539339-415B-479D-88F1-237C703F2CBF}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.DAL", "BusStationCRM.DAL.EF\BusStationCRM.DAL.csproj", "{BD88B7B0-35E2-4BAB-A127-0BB123D037D9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0539339-415B-479D-88F1-237C703F2CBF} = {E0539339-415B-479D-88F1-237C703F2CBF}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusStationCRM.Core", "BusStation.Core\BusStationCRM.Core.csproj", "{E0539339-415B-479D-88F1-237C703F2CBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84AB8F71-B1C6-45A1-B371-7D13ADB39066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84AB8F71-B1C6-45A1-B371-7D13ADB39066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84AB8F71-B1C6-45A1-B371-7D13ADB39066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84AB8F71-B1C6-45A1-B371-7D13ADB39066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79986908-11D5-4DBD-A180-89A56879D0C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79986908-11D5-4DBD-A180-89A56879D0C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79986908-11D5-4DBD-A180-89A56879D0C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79986908-11D5-4DBD-A180-89A56879D0C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDAA239A-BABE-480C-AA61-A20701BF1924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDAA239A-BABE-480C-AA61-A20701BF1924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDAA239A-BABE-480C-AA61-A20701BF1924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDAA239A-BABE-480C-AA61-A20701BF1924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD88B7B0-35E2-4BAB-A127-0BB123D037D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD88B7B0-35E2-4BAB-A127-0BB123D037D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD88B7B0-35E2-4BAB-A127-0BB123D037D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD88B7B0-35E2-4BAB-A127-0BB123D037D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0539339-415B-479D-88F1-237C703F2CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0539339-415B-479D-88F1-237C703F2CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0539339-415B-479D-88F1-237C703F2CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0539339-415B-479D-88F1-237C703F2CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB89EFE6-309B-4159-B527-29A47CF6FFC6}
+	EndGlobalSection
+EndGlobal
