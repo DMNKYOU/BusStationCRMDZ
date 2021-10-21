@@ -36,18 +36,18 @@ namespace BusStationCRM.Controllers
         // GET
         public async Task<IActionResult> IndexAsync()
         {
-            try
-            {
+            //try
+            //{
                 var voyages = await _voyagesService.GetAllAsync();
                 var resList = _mapper.Map<List<Voyage>, List<VoyageModel>>(voyages);
 
                 return View( new Views.Voyages.VoyagesIndexModel() { Voyages = resList });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex.ToString());
+            //    return RedirectToAction("Error", "Error", new { @statusCode = 500 });
+            //}
         }
 
         //method used for add and edit
@@ -55,17 +55,17 @@ namespace BusStationCRM.Controllers
         public async Task<IActionResult> EditAsync(int? id)
         {
             VoyageModel voyage;
-            try
-            {
+            //try
+            //{
                 voyage = id.HasValue
                     ? _mapper.Map<VoyageModel>(await _voyagesService.GetByIdAsync(id.Value))
                     : new VoyageModel();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return RedirectToAction("Error", "Error", new { @statusCode = 500 });
-            }
+            //}
+            //catch (Exception ex)
+            //{
+                //_logger.LogError(ex.ToString());
+                //return RedirectToAction("Error", "Error", new { @statusCode = 500 });
+            //}
 
             ViewBag.Action = id.HasValue ? "Edit": "Add";
             ViewBag.BusStops = _mapper.Map<List<BusStop>, List<BusStopModel>>(await _busStopsService.GetAllAsync());

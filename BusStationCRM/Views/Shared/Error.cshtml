@@ -2,13 +2,27 @@
 @{
     ViewData["Title"] = "Error";
 }
-<div class="pannel justify-content-center text-center">
-    <h1 class="text-danger pannel-header">@Model.StatusCode Error</h1>
-    <p class="pannel-text mb-1">
-        @Model.Message
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+<h2>Error Info</h2>
+
+<p>
+    @{
+        var exception = ViewData["Exception"] as Exception;
+        var errorMessage = ViewData["ExceptionMessage"] ?? $"Message: {exception?.Message}, StackTrace: {exception?.StackTrace}";
+    }
+    @Html.Raw(errorMessage)
+</p>
+
+@if (Model is { ShowRequestId: true })
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
-    <a class="pannel-link" asp-controller="Home" asp-action="Index">Go to Home Page</a>
-</div>
+}
+
 <h3>Development Mode</h3>
 <p>
     Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
