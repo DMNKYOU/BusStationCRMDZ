@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -13,7 +13,10 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
+        "AzureKeyVault": "https://busstationcrmdz.vault.azure.net/",
+        "AZURE_USERNAME": "DimkaBy7777@yahoo.com",
+        "VaultUri": "https://busstationcrmdz.vault.azure.net/"
       }
     },
     "BusStationCRM": {
@@ -23,7 +26,10 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
+        "AzureKeyVault": "https://busstationcrmdz.vault.azure.net/",
+        "AZURE_USERNAME": "DimkaBy7777@yahoo.com",
+        "VaultUri": "https://busstationcrmdz.vault.azure.net/"
       }
     }
   }

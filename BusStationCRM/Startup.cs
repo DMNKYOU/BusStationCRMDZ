@@ -18,6 +18,7 @@ using BusStationCRM.Middleware;
 using CampusCRM.MVC.Mappings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using BusStationCRM.Mail;
 
 namespace BusStationCRM
 {
@@ -60,19 +61,17 @@ namespace BusStationCRM
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    IConfigurationSection googleAuthNSection =
-                        Configuration.GetSection("Authentication:Google");
-                    options.ClientId = googleAuthNSection["ClientId"];
-                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    options.ClientId = Configuration["ClientId"];
+                    options.ClientSecret = Configuration["ClientSecret"];
                     //all users set this property private and better use own input
                     //options.Scope.Add("https://www.googleapis.com/auth/user.birthday.read");
                 });
            
             services.AddAuthorization(options =>
             {
-                //options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                //    .RequireAuthenticatedUser()
-                //    .Build();
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
                 //options.AddPolicy("ManageAndDevDepart", policy => //AllRolesFromManagementAndDevelopmentDepartments
                 //    policy.RequireRole("Admin", "Manager"));
             }); 
@@ -87,6 +86,12 @@ namespace BusStationCRM
             services.AddScoped<IOrdersService, OrdersService>();
             services.AddScoped<ITicketsService, TicketsService>();
 
+            EmailSettingsModel emailSettings = new EmailSettingsModel();
+            Configuration.GetSection("EmailSettings").Bind(emailSettings);
+            //emailSettings.Password = Configuration["EmailSettingsPassword"];
+            EmailService emailService = new EmailService(emailSettings);
+            services.AddSingleton(emailService);
+
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -100,9 +105,9 @@ namespace BusStationCRM
             app.UseMiddleware<CustomExceptionMiddleware>();
             if (env.IsDevelopment())
             {
-                //app.UseExceptionHandler("/Home/Error?code={0}");
-                app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
+                app.UseExceptionHandler("/Home/Error?code={0}");
+                //app.UseDeveloperExceptionPage();
+                //app.UseMigrationsEndPoint();
             }
             else
             {

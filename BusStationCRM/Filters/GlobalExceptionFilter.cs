@@ -9,30 +9,29 @@ namespace BusStationCRM.Filters
 {
     public class GlobalExceptionFilter : IExceptionFilter
     {
-    private readonly IWebHostEnvironment _hostingEnvironment;
-    private readonly IModelMetadataProvider _modelMetadataProvider;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IModelMetadataProvider _modelMetadataProvider;
 
-    public GlobalExceptionFilter(
-        IWebHostEnvironment hostingEnvironment,
-        IModelMetadataProvider modelMetadataProvider)
-    {
-        _hostingEnvironment = hostingEnvironment;
-        _modelMetadataProvider = modelMetadataProvider;
-    }
-
-    public void OnException(ExceptionContext context)
-    {
-        if (!_hostingEnvironment.IsDevelopment())
+        public GlobalExceptionFilter(
+            IWebHostEnvironment hostingEnvironment,
+            IModelMetadataProvider modelMetadataProvider)
         {
-            return;
+            _hostingEnvironment = hostingEnvironment;
+            _modelMetadataProvider = modelMetadataProvider;
         }
 
-        var result = new ViewResult {ViewName = "Error"};
-        result.ViewData = new ViewDataDictionary(_modelMetadataProvider,
-            context.ModelState);
-        result.ViewData.Add("Exception", context.Exception);
-        // TODO: Pass additional detailed data via ViewData
-        context.Result = result;
-    }
+        public void OnException(ExceptionContext context)
+        {
+            if (!_hostingEnvironment.IsDevelopment())
+            {
+                return;
+            }
+
+            var result = new ViewResult { ViewName = "Error" };
+            result.ViewData = new ViewDataDictionary(_modelMetadataProvider,
+                context.ModelState);
+            result.ViewData.Add("Exception", context.Exception);
+            context.Result = result;
+        }
     }
 }

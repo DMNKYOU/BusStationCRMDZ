@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.DAL", "BusSta
 		{E0539339-415B-479D-88F1-237C703F2CBF} = {E0539339-415B-479D-88F1-237C703F2CBF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusStationCRM.Core", "BusStation.Core\BusStationCRM.Core.csproj", "{E0539339-415B-479D-88F1-237C703F2CBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.Core", "BusStation.Core\BusStationCRM.Core.csproj", "{E0539339-415B-479D-88F1-237C703F2CBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusStationCRM.Mail", "BusStationCRM.Mail\BusStationCRM.Mail.csproj", "{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{E0539339-415B-479D-88F1-237C703F2CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0539339-415B-479D-88F1-237C703F2CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0539339-415B-479D-88F1-237C703F2CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
