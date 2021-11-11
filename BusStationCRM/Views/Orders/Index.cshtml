@@ -17,7 +17,7 @@
             <th scope="col" class="text-light">Voyage</th>
             <th scope="col" class="text-light">Voyage</th>
             <th scope="col" class="text-light">Status</th>
-            @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+            @if (User.IsInRole("Admin"))
             {
                 <th scope="col" class="text-light"></th>
             }

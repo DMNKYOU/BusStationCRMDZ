@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusStationCRM.Core", "BusSt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusStationCRM.Mail", "BusStationCRM.Mail\BusStationCRM.Mail.csproj", "{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6ED42F8C-8A47-4C5D-800D-C4C9BB4B1C06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusStationCRM.DAL.Tests", "BusStationCRM.DAL.Tests\BusStationCRM.DAL.Tests.csproj", "{563F768C-6EB6-4C37-9AE7-4719C5FBE2B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,9 +63,16 @@ Global
 		{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBCB91C6-C087-460C-BE5C-1C20E69EDFD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{563F768C-6EB6-4C37-9AE7-4719C5FBE2B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{563F768C-6EB6-4C37-9AE7-4719C5FBE2B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{563F768C-6EB6-4C37-9AE7-4719C5FBE2B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{563F768C-6EB6-4C37-9AE7-4719C5FBE2B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{563F768C-6EB6-4C37-9AE7-4719C5FBE2B7} = {6ED42F8C-8A47-4C5D-800D-C4C9BB4B1C06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB89EFE6-309B-4159-B527-29A47CF6FFC6}

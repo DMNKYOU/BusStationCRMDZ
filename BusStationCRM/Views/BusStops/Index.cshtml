@@ -30,7 +30,7 @@
         <th scope="col" class="text-light">Name</th>
         <th scope="col" class="text-light">Description</th>
         <th scope="col" class="text-light">Type</th>
-        @if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+        @if (User.IsInRole("Admin"))
         {
             <th scope="col" class="text-light"></th>
         }
@@ -43,7 +43,7 @@
             <th scope="col">@stop.Name</th>
             <th scope="col">@stop.Description</th>
             <th scope="col">@stop.Type</th>
-            @if(User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+            @if(User.IsInRole("Admin"))
             {
                 <th scope="col">
                     <div class="btn-group" role="group">
@@ -61,7 +61,7 @@
     }
     </tbody>
 </table>
-@if (User.Identity.IsAuthenticated) //(User.IsInRole("Admin"))
+@if (User.IsInRole("Admin"))
 {
     <div class="text-white">
         <a class="btn btn-primary active" asp-controller="BusStops" asp-action="Edit">Add new bus stop</a>

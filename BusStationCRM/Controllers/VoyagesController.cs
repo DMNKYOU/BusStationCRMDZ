@@ -52,6 +52,7 @@ namespace BusStationCRM.Controllers
 
         //method used for add and edit
         [HttpGet]
+        [Authorize(policy: "ManageAndDevDepart")]
         public async Task<IActionResult> EditAsync(int? id)
         {
             VoyageModel voyage;
@@ -77,7 +78,7 @@ namespace BusStationCRM.Controllers
         // POST: BusStopsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // [Authorize(policy: "")]
+        [Authorize(policy: "ManageAndDevDepart")]
         public async Task<ActionResult> EditAsync(VoyageModel voyageModel)
         {
 
@@ -107,7 +108,7 @@ namespace BusStationCRM.Controllers
 
 
         [HttpGet]
-        [Authorize]//(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try

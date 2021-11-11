@@ -25,7 +25,7 @@ namespace BusStationCRM.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IMailService _emailSender;
+        private readonly EmailService _emailSender;
 
         public RegisterModel(
             UserManager<User> userManager,
@@ -113,7 +113,7 @@ namespace BusStationCRM.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendPlainTextEmail(new string[]{Input.Email}, "Confirm your email",
+                    await _emailSender.SendHtmlEmail(new string[]{Input.Email}, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

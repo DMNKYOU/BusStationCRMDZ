@@ -66,14 +66,14 @@ namespace BusStationCRM
                     //all users set this property private and better use own input
                     //options.Scope.Add("https://www.googleapis.com/auth/user.birthday.read");
                 });
-           
+
             services.AddAuthorization(options =>
             {
                 options.FallbackPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
-                //options.AddPolicy("ManageAndDevDepart", policy => //AllRolesFromManagementAndDevelopmentDepartments
-                //    policy.RequireRole("Admin", "Manager"));
+                options.AddPolicy("ManageAndDevDepart", policy => //AllRolesFromManagementAndDevelopmentDepartments
+                    policy.RequireRole("Admin", "Manager"));
             }); 
             
             services.AddScoped<IRepositoryAsync<BusStop>, BusStopsRepository>();

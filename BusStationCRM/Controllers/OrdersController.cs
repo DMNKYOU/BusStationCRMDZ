@@ -77,7 +77,6 @@ namespace BusStationCRM.Controllers
         // POST: /Add
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddAsync(OrderModel orderModel)
         {
             try
