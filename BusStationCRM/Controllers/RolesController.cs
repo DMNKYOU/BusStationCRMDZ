@@ -22,6 +22,7 @@ namespace BusStationCRM.Controllers
         public IActionResult Index() => View(_roleManager.Roles.ToList());
 
         public IActionResult Create() => View();
+
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {
@@ -40,6 +41,7 @@ namespace BusStationCRM.Controllers
                     }
                 }
             }
+
             return View(name);
         }
 
@@ -51,6 +53,7 @@ namespace BusStationCRM.Controllers
             {
                 IdentityResult result = await _roleManager.DeleteAsync(role);
             }
+
             return RedirectToAction("Index");
         }
 
@@ -75,6 +78,7 @@ namespace BusStationCRM.Controllers
 
             return NotFound();
         }
+
         [HttpPost]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
