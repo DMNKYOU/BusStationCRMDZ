@@ -1,22 +1,26 @@
 using System;
 using System.Threading.Tasks;
+using BusStationCRM.DAL.Contexts;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
 namespace BusStationCRM.DAL.Tests
 {
     public class Tests
     {
-        //[SetUp]
-        //public void Setup()
-        //{
-        //    var myDatabaseName = "testDb_" + DateTime.Now.ToFileTimeUtc();
+        private ApplicationDbContext _context;
 
-        //    var options = new DbContextOptionsBuilder<AcademyContext>()
-        //        .UseInMemoryDatabase(databaseName: myDatabaseName)
-        //        .Options;
-        //    _context = new AcademyContext(options);
-        //    _repository = new CourseCategoryRepository(_context);
-        //}
+        [SetUp]
+        public void Setup()
+        {
+            var myDatabaseName = "testDb_" + DateTime.Now.ToFileTimeUtc();
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                 .UseInMemoryDatabase(databaseName: myDatabaseName)
+                .Options;
+            _context = new ApplicationDbContext(options);
+            //_repository = new CourseCategoryRepository(_context);
+        }
 
         //[Test]
         //public async Task GetCoursesWithHierarchy_IncludeHierarchy_ReturnsWithHierarchy()
