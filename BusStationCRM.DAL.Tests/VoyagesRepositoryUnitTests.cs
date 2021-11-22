@@ -15,9 +15,7 @@ namespace BusStationCRM.DAL.EF.Tests {
 
     public class AdvancedSearchTests
     {
-        public DbContextOptions<ApplicationDbContext> Opt;  
-        
-        private ApplicationDbContext _context;
+        public DbContextOptions<ApplicationDbContext> Opt;
 
         public IEnumerable<Voyage> GetTestVoyages()
         {
@@ -48,6 +46,20 @@ namespace BusStationCRM.DAL.EF.Tests {
                     NumberSeats = 13,
                     TicketCost = 8,
                     BusStopArrivalId = 2,
+                    BusStopDepartureId = 2,
+                    Type = TypeTransport.All
+                },
+                new Voyage()
+                {
+                    Id = 7,
+                    Number = 8,
+                    Name = "Name 8",
+                    DepartureInfo = new DateTime().AddDays(+2).AddHours(15),
+                    ArrivalInfo =  new DateTime().AddDays(+3).AddHours(19),
+                    TravelTime = new DateTime().AddDays(1).AddHours(4),
+                    NumberSeats = 8,
+                    TicketCost = 5,
+                    BusStopArrivalId = 3,
                     BusStopDepartureId = 2,
                     Type = TypeTransport.All
                 }
@@ -95,7 +107,10 @@ namespace BusStationCRM.DAL.EF.Tests {
             await using var context = new ApplicationDbContext(Opt);
             var repository = new VoyagesRepository(context);
             VoyagesService voyagesService = new VoyagesService(repository);
-            Assert.AreEqual(0, voyagesService.Filter(new VoyageFilter() {NameContains = "Offers"}).Result.Count());
+
+            var result = voyagesService.Filter(new VoyageFilter() { NameContains = "Offers" }).Result.Count();
+
+            Assert.AreEqual(0, result);
         }
 
         [Test]
@@ -104,88 +119,94 @@ namespace BusStationCRM.DAL.EF.Tests {
             await using var context = new ApplicationDbContext(Opt);
             var repository = new VoyagesRepository(context);
             VoyagesService voyagesService = new VoyagesService(repository);
-            Assert.AreEqual(0, voyagesService.Filter(new VoyageFilter() { PriceFrom = 119 }).Result.Count());
+
+            var result = voyagesService.Filter(new VoyageFilter() { PriceFrom = 119 }).Result.Count();
+
+            Assert.AreEqual(0, result);
         }
 
-    //    [Test]
-    //    public async Task TestSubTitle()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.AreEqual(3, offerService.AdvancedSearch(subtitle: "Offer").Count());
-    //    }
+        //    [Test]
+        //    public async Task TestSubTitle()
+        //    {
+        //        await using var context = new ApplicationDbContext(Opt);
+        //        var repository = new UnitOfWork(context);
+        //        OfferService offerService = new OfferService(repository);
+        //        Assert.AreEqual(3, offerService.AdvancedSearch(subtitle: "Offer").Count());
+        //    }
 
-    //    [Test]
-    //    public async Task TestCost()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.AreEqual(2, offerService.AdvancedSearch(minCost: 40).Count());
-    //    }
+        //    [Test]
+        //    public async Task TestCost()
+        //    {
+        //        await using var context = new ApplicationDbContext(Opt);
+        //        var repository = new UnitOfWork(context);
+        //        OfferService offerService = new OfferService(repository);
+        //        Assert.AreEqual(2, offerService.AdvancedSearch(minCost: 40).Count());
+        //    }
 
-    //    [Test]
-    //    public async Task TestCostAndSubTitle()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.AreEqual(1, offerService.AdvancedSearch(subtitle: "Offer", minCost: 40).Count());
-    //    }
+        //    [Test]
+        //    public async Task TestCostAndSubTitle()
+        //    {
+        //        await using var context = new ApplicationDbContext(Opt);
+        //        var repository = new UnitOfWork(context);
+        //        OfferService offerService = new OfferService(repository);
+        //        Assert.AreEqual(1, offerService.AdvancedSearch(subtitle: "Offer", minCost: 40).Count());
+        //    }
 
-    //    [Test]
-    //    public async Task TestRangeCost()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.AreEqual(2, offerService.AdvancedSearch(minCost: 5, maxCost: 29).Count());
-    //    }
+        [Test]
+        public async Task TestRangeCost()
+        {
+            await using var context = new ApplicationDbContext(Opt);
+            var repository = new VoyagesRepository(context);
+            VoyagesService voyagesService = new VoyagesService(repository);
 
-    //    [Test]
-    //    public async Task TestRangeCostAll()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.AreEqual(5, offerService.AdvancedSearch(minCost: 5, maxCost: 50).Count());
-    //    }
+            var result = voyagesService.Filter(new VoyageFilter() { PriceFrom = 1, PriceTo = 8 }).Result.Count();
 
-    //    [Test]
-    //    public async Task TestMinMoreMaxException()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.Throws<ArgumentException>(() => offerService.AdvancedSearch(minCost: 15, maxCost: 3));
-    //    }
+            Assert.AreEqual(2, result);
+        }
 
-    //    [Test]
-    //    public async Task TestNegativeMinException()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.Throws<ArgumentException>(() => offerService.AdvancedSearch(minCost: -15, maxCost: 3));
-    //    }
+        //    [Test]
+        //    public async Task TestRangeCostAll()
+        //    {
+        //        await using var context = new ApplicationDbContext(Opt);
+        //        var repository = new UnitOfWork(context);
+        //        OfferService offerService = new OfferService(repository);
+        //        Assert.AreEqual(5, offerService.AdvancedSearch(minCost: 5, maxCost: 50).Count());
+        //    }
 
-    //    [Test]
-    //    public async Task TestNegativeMaxException()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.Throws<ArgumentException>(() => offerService.AdvancedSearch(maxCost: -3));
-    //    }
+        //    [Test]
+        //    public async Task TestMinMoreMaxException()
+        //    {
+        //        await using var context = new ApplicationDbContext(Opt);
+        //        var repository = new UnitOfWork(context);
+        //        OfferService offerService = new OfferService(repository);
+        //        Assert.Throws<ArgumentException>(() => offerService.AdvancedSearch(minCost: 15, maxCost: 3));
+        //    }
 
-    //    [Test]
-    //    public async Task TestNegativeMinAndMaxException()
-    //    {
-    //        await using var context = new ApplicationDbContext(Opt);
-    //        var repository = new UnitOfWork(context);
-    //        OfferService offerService = new OfferService(repository);
-    //        Assert.Throws<ArgumentException>(() => offerService.AdvancedSearch(minCost: -4, maxCost: -3));
-    //    }
+        //    [Test]
+        //    public async Task TestNegativeMinException()
+        //    {
+        //        await using var context = new ApplicationDbContext(Opt);
+        //        var repository = new UnitOfWork(context);
+        //        OfferService offerService = new OfferService(repository);
+        //        Assert.Throws<ArgumentException>(() => offerService.AdvancedSearch(minCost: -15, maxCost: 3));
+        //    }
+
+        //    [Test]
+        //    public async Task TestNegativeMaxException()
+        //    {
+        //        await using var context = new ApplicationDbContext(Opt);
+        //        var repository = new UnitOfWork(context);
+        //        OfferService offerService = new OfferService(repository);
+        //        Assert.Throws<ArgumentException>(() => offerService.AdvancedSearch(maxCost: -3));
+        //    }
+
+        //    [Test]
+        //    public async Task TestNegativeMinAndMaxException()
+        //    {
+        //        await using var context = new ApplicationDbContext(Opt);
+        //        var repository = new UnitOfWork(context);
+        //        OfferService offerService = new OfferService(repository);
+        //        Assert.Throws<ArgumentException>(() => offerService.AdvancedSearch(minCost: -4, maxCost: -3));
+        //    }
     }
 }
