@@ -65,12 +65,12 @@ namespace  BusStationCRM.BLL.Services
                 return await _voyagesRepository.GetAllAsync();
 
             search = search.NormalizeSearchString();
-            var resault = await _voyagesRepository.FindAsync(c =>
+            var result = await _voyagesRepository.FindAsync(c =>
                 c.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
                 c.BusStopDeparture.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
                 c.BusStopArrival.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
 
-            return await resault.ToListAsync();
+            return await result.ToListAsync();
         }
 
         public async Task<IEnumerable<Voyage>> Filter(VoyageFilter filter)
